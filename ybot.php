@@ -124,7 +124,7 @@
     $uid = $own_profile->user_info->id;
     
     //  Reading speech table.
-    $speech_table = dump_table($db);
+    $speech_table = dump_table($data_source);
     
     $pause = false;
     $runbot = true;
@@ -199,7 +199,6 @@
 	  
 	  // Record finish plurks
 	  $read_plurks[] = $item->plurk_id ;
-	}
       } else
 	// Mute plurks which cannot add responses.
 	$mute_plurks[] = $item->plurk_id;
