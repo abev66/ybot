@@ -22,7 +22,7 @@ else{
 	<div class='status'>
 		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password<a>, <a href='logout.php'>logout</a>"?>
 	</div>
-	<div class=banner>
+	<div class='banner'>
 		<img src="http://i.imgur.com/kMqvd.png" width="500" height="100" alt="±±¨î" />
 	</div>
 	<div class='link'>

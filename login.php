@@ -15,7 +15,7 @@ session_start();
 		<form name="logconfirm" action=""  method="post">
 			name:<input type="text" name="name"><br />
 			pass: <input type="password" name="passw"><br />
-			<input type="submit" value="ˇ登入">
+			<input type="submit" value="登入">
 		</form>
 	<?php //form check
 	if (isset($_POST["name"])){

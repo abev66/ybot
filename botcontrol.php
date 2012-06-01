@@ -22,7 +22,7 @@ else{
 	<div class='status'>
 		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password<a>, <a href='logout.php'>logout</a>"?>
 	</div>
-	<div class=banner>
+	<div class='banner'>
 		<img src="http://i.imgur.com/kMqvd.png" width="500" height="100" alt="控制" />
 	</div>
 	<div class='link'>
@@ -41,6 +41,14 @@ else{
 	<a href='botsetting.php'>botsetting</a>
 	</div>
 	<div class='content'>
+		控制機器人吧!
+		<form>
+			<input type='submit' name='pause' value='暫停機器人'>
+			<input type='submit' name='stop' value='停止機器人'>
+			<input type='submit' name='check' value='檢視狀態'>
+			<input type='submit' name='say' value='發噗'>
+		</form>
+		
 	</div>
 	<?php db_close($dblink);?>
 </body>

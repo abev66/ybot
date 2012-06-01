@@ -33,7 +33,7 @@ else{
 			echo "<a href='accountmanage.php'>account manage</a>";
 			}
 		?>
-Hey! wanna change password?<br />
+<br />Hey! wanna change password?<br />
 <form name='passwd' action='' method='POST'>
 <br />
 Your current password:<input type='password' name='oldpassword'><br />
