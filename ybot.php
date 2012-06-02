@@ -22,14 +22,18 @@
 //---------- DEFINE ------------    
     // Information about this bot.
     define('APPNAME','ybot');
-    define('VERNUM','0.2.0');
-    define('SUBVERNUM','20120528');
+    define('VERNUM','0.2.1');
+    define('SUBVERNUM','20120603');
     define('OTHERMSG','DB-PHP-yaoming');
+    define('SOCKET_ADDR','ybot-socket');
     
     // load php-plurk-api and database port.
     require('plurk_api.php');
     require('db_port.php');
-    
+
+    // command flags
+    include('command_flags.inc');
+
 //---------- Functions ------------
     
     function pick_sentence( $qualifier , $content_raw, $table ) {
@@ -106,6 +110,93 @@
 	    return $item->nick_name;
       }
     }
+    
+    // Run command recived from client
+    function run_command($str_command, $socket_server_side, $socket_client_side, $control_vars){
+    
+      // Decode command
+      $command = json_decode($str_command);
+      
+      switch($command['command']){
+      
+	case CMD_PING:
+	  socket_sendto($socket_server_side, FB_ECHO, strlen(FB_ECHO), 0, $socket_client_side);
+	  break;
+	  
+	case CMD_GET_PAUSE_STATUS:
+	  $msg = json_encode( (!$control_vars['pause']) ? FB_RUNNING : FB_PAUSED );
+	  socket_sendto($socket_server_side, $msg, strlen($msg), 0, $socket_client_side);
+	  break;
+	  
+	case CMD_PAUSE:
+	  $control_vars['pause'] = true;
+	  socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	  break;
+	  
+	case CMD_CONTINUE:
+	  $control_vars['pause'] = false;
+	  socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	  break;
+	  
+	case CMD_SEND_PLURK:
+	  global $plurk;
+	  
+	  // Fill data
+	  include('plurk_lang_flags.inc');
+	  $lang = isset($command['lang']) ? $command['lang'] : PLURK_LANG_CHINESE_TRADITIONAL;
+	  $qualifier = isset($command['qualifier']) ? $command['qualifier'] : 'says';
+	  $no_comments = isset($command['no_comments'] ? $command['no_comments'] : 0;
+	  $content = isset($command['content']) ? $command['content'] : NULL ;
+	  
+	  if( $content !== NULL && mb_strlen($content, 'UTF-8') <= 140 ){
+	    $plurk->add_plurk($lang, $qualifier, $content, NULL, $no_comments);
+	    socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	  } else 
+	    socket_sendto($socket_server_side, FB_ERROR, strlen(FB_ERROR), 0, $socket_client_side);
+
+	  break;
+	  
+	case CMD_RELOAD_SETTINGS:
+	  global $config, $data_source;
+	  $new_config = dump_settings($data_source);
+	  
+	  if($new_config == NULL)
+	    socket_sendto($socket_server_side, FB_ERROR, strlen(FB_ERROR), 0, $socket_client_side);
+	  else {
+	    socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	    $config = $new_config;
+	  }  
+	  break;
+	  
+	case CMD_RELOAD_TABLE:
+	  global $speech_table, $data_source;
+	  $new_table = dump_table($data_source);
+	  
+	  if($new_table == NULL)
+	    socket_sendto($socket_server_side, FB_ERROR, strlen(FB_ERROR), 0, $socket_client_side);
+	  else {
+	    socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	    $speech_table = $new_table;
+	  }
+	  break;
+	  
+	case CMD_RELOGIN:
+	  $control_vars['relogin'] = true;
+	  socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	  break;
+	  
+	case CMD_EXIT:
+	  $control_vars['runbot'] = false;
+	  socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	  break;
+	  
+	default:
+	  socket_sendto($socket_server_side, FB_ERROR_INVALID_COMMAND, strlen(FB_ERROR_INVALID_COMMAND), 0, $socket_client_side);
+	  
+      }
+      
+      return $control_vars;
+    }
  
 //---------- Main ------------
 
@@ -114,6 +205,11 @@
 
     //  Read configure
     $config = dump_settings($data_source);
+    
+    // Create Socket
+    $bot_socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
+    socket_bind($bot_socket, SOCKET_ADDR, 0);
+    socket_set_block($bot_socket);
     
     //  Login Plurk
     $plurk = new plurk_api();
@@ -126,85 +222,97 @@
     //  Reading speech table.
     $speech_table = dump_table($data_source);
     
-    $pause = false;
-    $runbot = true;
-    $relogin = false;
-    $counter = 0;
+    // Initialize Control Variables
+    $control_vars = array(
+      'pause' => false,
+      'runbot' => true,
+      'relogin' => false,
+      'count' => 0
+    );
     
     
     //  Outter loop
-    while ($runbot) {
-      $counter += 1;
+    while ($control_vars['runbot']) {
+      $control_vars['count'] += 1;
       
       //  Get Plurks
       $pu = $plurk->get_plurks(date('c'), 30);
       
       //  Apply all friend requests
-      if( ($config['AUTO_ACCEPT_FRIENDS']=='true') && !$pause)
+      if( ($config['AUTO_ACCEPT_FRIENDS']=='true') && !$control_vars['pause'])
 	$plurk->add_all_as_friends();
+	
+      // Get command from socket
+      $cmd_buffer = '';
+      $cmd_source = '';
+      @socket_recvfrom($socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
+      
+      
+      if(!empty($cmd_buffer))
+	$control_vars = run_command($cmd_buffer, $bot_socket, $cmd_source, $control_vars);
       
       $msg = array();
       
-      // Check each plurks.
-      foreach( $pu->plurks as $item ) {
-	// dont reply by default.
-	$do_reply = false;
-	
-	// Only Check if the plurk can add response.
-	if($item->no_comments != 1) {
-	    if ( ( !replied($item->response_count, $item->plurk_id, $uid)) && ( (is_mention($item->content_raw, $config['PLURK_ACCOUNT']) || $config['RESPONSE_MODE'] == 'ANYWAY') && ($config['RESPONSE_MODE'] != 'DISABLED') ) && ($item->owner_id != $uid) ) {
-		$do_reply = true; 
-		
-		$msg = array(
-		  'qualifier' => $item->qualifier,
-		  'content' => $item->content_raw,
-		  'id' => $item->owner_id,
-		  'nick_name' => get_nickname($item->owner_id, $pu->plurk_users),
-		  'mention' => false
-		);
-	    } else if ( ($config['CHECK_RESPONSES'] == 'true') && ($item->is_unread == 1)) {
-		$responses = $plurk->get_responses($item->plurk_id);
-	  		
-		for ($i=0;$i<count($responses->responses);$i++) {
-		  $resItem = $responses->responses[$i];
-		  
-		  if(is_mention($resItem->content_raw, $config['PLURK_ACCOUNT']) && ($resItem->user_id != 	$uid) ) {
-		    $do_reply = true;
-		    
-		    $msg = array (
-		      'qualifier' => $resItem->qualifier,
-		      'content' => $resItem->content_raw,
-		      'id' => $resItem->user_id,
-		      'nick_name' => get_nickname($resItem->user_id, $responses->friends),
-		      'mention' => true
-		    );
-		  }
-		  else if( $resItem->user_id == $uid )
-		    $do_reply = false;
-		}
-		
-	    } 
-	
-	    
-	  if($do_reply) {
-	    // do reply
-	    if(($sentence = pick_sentence( $msg['qualifier'] , $msg['content'], $speech_table )) !== NULL) {
-	      if($msg['mention'])
-		$sentence['content'] = '@'.$msg['nick_name'].': '.$sentence['content'];
-	      
-	      $plurk->add_response( $item->plurk_id , $sentence['content'], $sentence['qualifier'] );
-	      echo "\n[".$msg['qualifier'].']'.$msg['content']."->\n\t[".$sentence['qualifier'].']'.$sentence['content']."\n";
-	    }
-	  }
+      if(!$control_vars['pause']){
+	// Check each plurks.
+	foreach( $pu->plurks as $item ) {
+	  // dont reply by default.
+	  $do_reply = false;
 	  
-	  // Record finish plurks
-	  $read_plurks[] = $item->plurk_id ;
-      } else
-	// Mute plurks which cannot add responses.
-	$mute_plurks[] = $item->plurk_id;
-    }
-      
-    if(!$pause) {
+	  // Only Check if the plurk can add response.
+	  if($item->no_comments != 1) {
+	      if ( ( !replied($item->response_count, $item->plurk_id, $uid)) && ( (is_mention($item->content_raw, $config['PLURK_ACCOUNT']) || $config['RESPONSE_MODE'] == 'ANYWAY') && ($config['RESPONSE_MODE'] != 'DISABLED') ) && ($item->owner_id != $uid) ) {
+		  $do_reply = true; 
+		  
+		  $msg = array(
+		    'qualifier' => $item->qualifier,
+		    'content' => $item->content_raw,
+		    'id' => $item->owner_id,
+		    'nick_name' => get_nickname($item->owner_id, $pu->plurk_users),
+		    'mention' => false
+		  );
+	      } else if ( ($config['CHECK_RESPONSES'] == 'true') && ($item->is_unread == 1)) {
+		  $responses = $plurk->get_responses($item->plurk_id);
+			  
+		  for ($i=0;$i<count($responses->responses);$i++) {
+		    $resItem = $responses->responses[$i];
+		    
+		    if(is_mention($resItem->content_raw, $config['PLURK_ACCOUNT']) && ($resItem->user_id != 	$uid) ) {
+		      $do_reply = true;
+		      
+		      $msg = array (
+			'qualifier' => $resItem->qualifier,
+			'content' => $resItem->content_raw,
+			'id' => $resItem->user_id,
+			'nick_name' => get_nickname($resItem->user_id, $responses->friends),
+			'mention' => true
+		      );
+		    }
+		    else if( $resItem->user_id == $uid )
+		      $do_reply = false;
+		  }
+		  
+	      } 
+	  
+	      
+	    if($do_reply) {
+	      // do reply
+	      if(($sentence = pick_sentence( $msg['qualifier'] , $msg['content'], $speech_table )) !== NULL) {
+		if($msg['mention'])
+		  $sentence['content'] = '@'.$msg['nick_name'].': '.$sentence['content'];
+		
+		$plurk->add_response( $item->plurk_id , $sentence['content'], $sentence['qualifier'] );
+		echo "\n[".$msg['qualifier'].']'.$msg['content']."->\n\t[".$sentence['qualifier'].']'.$sentence['content']."\n";
+	      }
+	    }
+	    
+	    // Record finish plurks
+	    $read_plurks[] = $item->plurk_id ;
+	  } else
+	  // Mute plurks which cannot add responses.
+	    $mute_plurks[] = $item->plurk_id;
+	}
+
       // Mark as Read or Mute 
       if($config['MUTE_AFTER_RESPONSE'] == 'true') {
 	$read_plurks = array_merge($mute_plurks, $read_plurks);
@@ -222,25 +330,27 @@
     }
     
     // relogin every 4 hours
-    if ( ((($counter*$config['CHECK_INTERVAL'])%14400) == 0 ) || $relogin ) {
+    if ( ( !$control_vars['pause'] && (($control_vars['count']*$config['CHECK_INTERVAL'])%14400) == 0 ) || $control_vars['relogin'] ) {
       $plurk = new plurk_api();
       $plurk->login($config['API_KEY'], $config['PLURK_ACCOUNT'], $config['PLURK_PASSWORD']); 
 
       $own_profile = $plurk->get_own_profile();
       $uid = $own_profile->user_info->id;
       
-      $counter = 0;
-      $relogin = false;
+      $control_vars['count'] = 0;
+      $control_vars['relogin'] = false;
     }
     
     // Reload configure
     $config = dump_settings($data_source);
-    
-    
         
     // Sleep for a while
     sleep($config['CHECK_INTERVAL']);
     
    }
    
+   // Close socket
+   socket_set_nonblock($bot_socket);
+   socket_close($bot_socket);
+   unlink(SOCKET_ADDR);
 ?>
