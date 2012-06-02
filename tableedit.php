@@ -39,7 +39,7 @@ else{
 	<?php
 		if(isset($_POST['keykeyword'])){
 		$result=output_table_keyword($dblink,$_POST['keykeyword']);
-		echo "<table border='1' align='center'>";
+		echo "<table id='fortable' border='1' align='center'><th>keyword</th><th></th>";
 		foreach($result as $i){
 			echo "<tr><td>".$i['keyword']."</td>";
 			echo "<td><form action='' method='POST'><input type='hidden' name='deletek' value='".$i['keyword']."'><input type='submit' value='刪除'></form></td>";
@@ -63,7 +63,7 @@ else{
 					}
 				$result=$tmp;
 				}
-			echo "<table border='1' align='center'>";
+			echo "<table id='fortable' border='1' align='center'><th>response</th><th></th><th></th><th></th><th></th><th>keywords</th>";
 			foreach($result as $i){
 				echo "<tr><td>".$i['qualifier']."</td><td>".$i['response']."</td>";
 				echo "<td><form action='' method='POST'><input type='hidden' name='deleter' value='".$i['response']."'><input type='submit' value='刪除'></form></td>";

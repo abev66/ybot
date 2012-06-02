@@ -38,12 +38,12 @@ else{
 			}
 		?>
 		</ul>
-	</div>
+	</div><br />
 	<div class='content' align='center'>
 		<?php //view all manager
 			if(isset($_POST['viewallmanager'])){
 				$result=mysqli_query($dblink,"SELECT * FROM administers");
-				echo "<table border='1'>";
+				echo "<table border='1' id='fortable' align='center'><th>account</th><th>authority</th><th></th><th></th>";
 				while($record=mysqli_fetch_assoc($result)){
 					$record['type']=='a' ? $record['type']='可修改設定及詞彙' : $record['type']='可修改詞彙';
 					echo "<tr><td>".$record['account']."</td><td>".$record['type'],"</td>";

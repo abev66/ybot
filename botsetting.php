@@ -42,10 +42,10 @@ else{
 	<a class='links' href='botcontrol.php'>botcontrol</a></li><li>
 	<a class='links' href='botsetting.php'>botsetting</a></li></ul>
 	</div>
-	<div class='content'>
+	<div class='content'><br />
 	<?php
 	$settings=dump_settings($dblink);
-	echo "<table border='1'>";
+	echo "<table border='1' id='fortable' align='center'><th>SETTING NAME</th><th>VALUES</th><th />";
 	foreach($settings as $k=>$i){
 			echo "<tr><td>".$k."</td><td>".$i."</td><td><form action='' method='POST'><input type='hidden' name='updateset' value='".$k."' />";
 			echo "<input type='hidden' name='updatevalue' value='".$i."'><input type='submit' name='update' value='修改'></form></td></tr>";

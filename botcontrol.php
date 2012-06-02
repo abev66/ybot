@@ -54,3 +54,8 @@ else{
 	<?php db_close($dblink);?>
 </body>
 </html>
+<?php 
+if (isset($_POST['say'])){
+	
+	}
+?>
