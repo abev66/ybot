@@ -316,7 +316,7 @@
       );
     }
     
-    return $result ? NULL : mysqli_error($result);
+    return $result ? NULL : mysqli_error($db);
   }
 
 
