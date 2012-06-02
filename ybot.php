@@ -25,7 +25,7 @@
     define('VERNUM','0.2.1');
     define('SUBVERNUM','20120603');
     define('OTHERMSG','DB-PHP-yaoming');
-    define('SOCKET_ADDR','ybot-socket');
+    define('SOCKET_ADDR','sockets/ybot-socket');
     
     // load php-plurk-api and database port.
     require('plurk_api.php');
