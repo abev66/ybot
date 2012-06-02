@@ -145,7 +145,7 @@
 	  include('plurk_lang_flags.inc');
 	  $lang = isset($command['lang']) ? $command['lang'] : PLURK_LANG_CHINESE_TRADITIONAL;
 	  $qualifier = isset($command['qualifier']) ? $command['qualifier'] : 'says';
-	  $no_comments = isset($command['no_comments'] ? $command['no_comments'] : 0;
+	  $no_comments = isset($command['no_comments']) ? $command['no_comments'] : 0;
 	  $content = isset($command['content']) ? $command['content'] : NULL ;
 	  
 	  if( $content !== NULL && mb_strlen($content, 'UTF-8') <= 140 ){

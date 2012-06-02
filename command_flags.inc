@@ -13,6 +13,6 @@
   define('FB_PAUSED', 'paused');
   define('FB_ECHO', 'echo');
   define('FB_OK', 'okay');
-  define('FB_ERROR_INVALID_COMMAND', 'invalid_command')
+  define('FB_ERROR_INVALID_COMMAND', 'invalid_command');
   define('FB_ERROR', 'error');
 ?>
