@@ -8,6 +8,7 @@ session_start();
 <html>
 <head>
 	<title>login</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
 	<div class='banner' align='center'><img src="http://i.imgur.com/xQgmj.png" width="500" height="200" alt="歡迎來到登入頁面" /></div>

@@ -6,9 +6,7 @@ if(!isset($_SESSION['uid'])){
 	header("location: login.php");
 	}
 else{
-	$session_uid=$_SESSION["uid"];
-	$session_name=$_SESSION["name"];
-	$session_type=$_SESSION["type"];
+	header("location: tableedit.php");
 	}
 ?>
 <html>
@@ -20,7 +18,7 @@ else{
 	<div class='status'>
 		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password<a>, <a href='logout.php'>logout</a>"?>
 	</div>
-	我是首頁
+	我是首頁，已廢棄
 	<div class='link'>
 		<a href='tableedit.php'>table edit</a>
 		<?php 

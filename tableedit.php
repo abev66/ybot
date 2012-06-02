@@ -17,47 +17,41 @@ else{
 <head><title>table edit</title><link rel="stylesheet" href="style.css" type="text/css" /></head>
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password<a>, <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password<a> | <a href='logout.php'>logout</a>"?>
 	</div>
 	<div class='banner' >
-	<img src="http://i.imgur.com/AMZRm.png" width="500" height="100" alt="詞彙編輯" />
+		<img src="http://i.imgur.com/AMZRm.png" width="500" height="100" alt="詞彙編輯" />
 	</div>
-	<div class='link'>
-		<a href='tableedit.php'>table edit</a>
+	<div class='link'><ul>
 		<?php 
 		if($session_type=='a'){
-			echo "<a href='botcontrol.php'>robot control</a>";
+			echo "<li><a class='links' href='tableedit.php'>table edit</a></li> ";
+			echo "<li><a class='links' href='botcontrol.php'>robot control</a></li>";
 			}
 		if($session_uid==1){
-			echo "<a href='accountmanage.php'>account manage</a>";
+			echo "<li/><a class='links' href='accountmanage.php'>account manage</a><li>";
 			}
 		?>
+		</ul>
 	</div>
 	<div class='content' >
 	查詢關鍵字：<form name='keywordq' action='' method='POST'><input type='text' name='keykeyword'><input type='submit' value='查詢'></form><br />
 	<?php
 		if(isset($_POST['keykeyword'])){
 		$result=output_table_keyword($dblink,$_POST['keykeyword']);
-		echo "<table border='1'>";
+		echo "<table border='1' align='center'>";
 		foreach($result as $i){
 			echo "<tr><td>".$i['keyword']."</td>";
 			echo "<td><form action='' method='POST'><input type='hidden' name='deletek' value='".$i['keyword']."'><input type='submit' value='刪除'></form></td>";
-			echo "<td><form action='' method='POST'><input type='hidden' name='updatek' value='".$i['keyword']."'><input type='submit' value='修改'></form></td></tr>";
 			}
 		echo "</table>";
 			}
-		if (isset($_POST['updatek']))
-			echo "<form action='' method='POST'><input type='hidden' name='updatekc' value='".$_POST['updatek']."'><input type='text' name='newword' value='".$_POST['updatek']."'><input type='submit' value='修改'></form>";
-		if (isset($_POST['updatekc'])){
-			if(!update_keyword($dblink, $_POST['updatekc'], $_POST['newword']))
-				echo "update sucessed!!<br />";
-				}
 		if (isset($_POST['deletek'])){
 			if(!remove_keywords($dblink,$_POST['deletek']))
 				echo "remove sucessed!!<br />";
 			}
 	?>
-	查詢回應句：<form name='replyq' action='' method='POST'><input type='text' name='keyreply'><input type='submit' value='查詢'></form>
+	查詢回應句：<form name='replyq' action='' method='POST'><input type='text' name='keyreply'><input type='submit' value='查詢'></form><br />
 	<?php
 		if (isset($_POST['keyreply'])){
 			$result=dump_table($dblink);
@@ -69,21 +63,22 @@ else{
 					}
 				$result=$tmp;
 				}
-			echo "<table border='1'>";
+			echo "<table border='1' align='center'>";
 			foreach($result as $i){
 				echo "<tr><td>".$i['qualifier']."</td><td>".$i['response']."</td>";
 				echo "<td><form action='' method='POST'><input type='hidden' name='deleter' value='".$i['response']."'><input type='submit' value='刪除'></form></td>";
 				echo "<td><form action='' method='POST'><input type='hidden' name='updater' value='".$i['response']."'><input type='hidden' name='updaterq' value='".$i['qualifier']."'>";
-				echo "<input type='submit' value='修改'></form></td><td><form action='' method='POST'><input type='hidden' name='resaddkey' value='".$i['response']."'><input type='submit' value='新增關鍵字'></form></td>";
+				echo "<input type='submit' value='修改'></form></td><td><form action='' method='POST'><input type='hidden' name='resaddkey' value='".$i['response']."'><input type='submit' value='新增關鍵字'></form></td><td>";
 				foreach($i['keywords'] as $va)
-					echo "<td><a href='tableedit.php?responsea=".$i['response']."&keyword=".$va."'>".$va."</a></td>";
+					echo "<a href='tableedit.php?responsea=".$i['response']."&keyword=".$va."'>".$va."</a>  ";
 				}
-			echo "</tr></table>";
+			echo "</td></tr></table>";
 			}
 		if (isset($_GET['responsea'])){
 			$key=array($_GET['keyword']);
 			if(!delete_relation($dblink, $_GET['responsea'],$key))
 				echo "relation deleted";
+				header("location: tableedit.php");
 			}
 		if (isset($_POST['resaddkey'])){
 			echo "<form action='' method='POST'><input type='hidden' name='resaddkeyres' value='".$_POST['resaddkey']."'>要新增的關鍵字：";
@@ -113,7 +108,7 @@ else{
 				echo "update sucessed!!<br />";
 			}
 		if (isset($_POST['deleter'])){
-			if(!remove_sentense($dblink,$_POST['deleter']))
+			if(!remove_sentence($dblink,$_POST['deleter']))
 				echo "remove sucessed!!<br />";
 			}
 	?>
@@ -148,7 +143,7 @@ else{
 		$keyword=trim($keyword);
 		$keyword=explode('|',$keyword);
 		add_keywords($dblink,$keyword);
-		add_sentense($dblink,$qualifier,$reply);
+		add_sentence($dblink,$qualifier,$reply);
 		create_relation($dblink,$reply,$keyword);
 		}
 	db_close($dblink);
