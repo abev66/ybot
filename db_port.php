@@ -306,7 +306,7 @@
     );
     
     if(mysqli_num_rows($result) <= 0){
-      $result = mysqli_query(
+      $result = mysqli_query($db, 
 	'INSERT INTO '.TABLE_SETTINGS."(setting,value) VALUE('$setting','$value');"
       );
       
