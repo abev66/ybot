@@ -247,9 +247,11 @@
       $cmd_source = '';
       @socket_recvfrom($socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
       
-      
-      if(!empty($cmd_buffer))
+      while(!empty($cmd_buffer)){
 	$control_vars = run_command($cmd_buffer, $bot_socket, $cmd_source, $control_vars);
+	$cmd_buffer = '';
+	@socket_recvfrom($socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
+      }
       
       $msg = array();
       
