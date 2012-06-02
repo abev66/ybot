@@ -1,75 +1,107 @@
 body {
-  background-image:url('images/background.jpg');
-  background-repeat:no-repeat;
-  background-attachment:fixed;
-  background-position:right bottom;
+  background-image: url('images/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: right bottom;
 }
 
 .status {
-  position:fixed;
-  top:2px;
-  right:10px;
+  position: fixed;
+  top: 2px;
+  right: 10px;
 }
 
 .link {
-  margin:auto;
-  text-align:center;
-  width:32%;
+  margin: auto;
+  background-color: #add8e6;
+  text-align: center;
 }
 
 .banner {
-  margin:auto;
-  width:500px;
+  margin: auto;
+  width: 500px;
 }
 
 .botlink {
-  margin:auto;
-  text-align:center;
-  width:18%;
+  margin: auto;
+  text-align: center;
+  width: 18%;
 }
 
 .content {
-  width:600px;
-  margin-left:auto;
-  margin-right:auto;
-  text-align:center;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .logout {
-  position:fixed;
-  top:150px;
-  text-align:center;
-  width:100%;
-  margin-left:auto;
-  margin-right:auto;
+  position: fixed;
+  top: 150px;
+  text-align: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 ul {
-  list-style-type:none;
-  margin:0;
-  padding:0;
-  overflow:hidden;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 li {
-  float:left;
+  float: left;
 }
 
-.links:link,.links:visited {
-  display:block;
-  font-weight:bold;
-  color:#FFFFFF;
-  background-color:#add8e6;
-  text-align:center;
-  padding:4px;
-  text-decoration:none;
-  text-transform:uppercase;
+.links: link,.links: visited {
+  display: block;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: #add8e6;
+  text-align: center;
+  padding: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
-.links:hover,.links:active {
-  background-color:#87cefa;
+.links: hover,.links: active {
+  background-color: #87cefa;
 }
 
-a:visited {
-  color:#0000ff
+a: visited {
+  color: #0000ff
 }
+
+#fortable {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif, "微軟正黑體";
+  border-collapse: collapse;
+}
+
+#fortable td, #fortable th {
+  font-size: 1em;
+  border: 1px solid #add8e6;
+  padding: 3px 7px 2px 7px;
+}
+
+#fortable th {
+  text-transform: uppercase;
+  font-size: 1.1em;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  background-color: #add8e6;
+  color: #ffffff;
+}
+
+#fortable td {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+#fortable tr.alt td 
+{
+  color: #000000;
+  background-color: #EAF2D3;
+}　　
