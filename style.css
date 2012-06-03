@@ -23,8 +23,14 @@ body {
 }
 
 .botlink {
-  float: left;
+  width: inherit;
+  display: block;
   text-align: center;
+}
+
+.botlink>a{
+  display: block;
+  float: left;
 }
 
 .content {

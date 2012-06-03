@@ -23,23 +23,33 @@ else{
       <!--
 	.plurk_box {
 	  display:block;
-	  margin: auto;
-	  background-color: #ADD8E6;
-	  background-image: url('images/plurk-logo.png');
+	  margin: 1.5em auto;
+	  background-color: rgba(173,216,230,0.5);
 	  background-position: right bottom;
+	  padding: 0.2em;
+	  border-radius: 10px;
+	  opacity: 0.5px;
+	}
+	.plurk_box {
+	  opacity: 1;
 	}
 	#send-btn {
 	  width: 81px;
 	  height: 38px;
 	  background-image: url('images/plurkbuttom.png');
 	  background-position: center center;
+	  background-repeat: no-repeat;
 	  text-indent: -9999px;
+	  border-radius: 5px;
 	}
 	.notice{
 	  width: 80%;
 	  display: block;
-	  margin: 1em auto;
-	  background-color: #C0FFC0;
+	  padding: 0.5em;
+	  margin: 1.5em auto;
+	  border-radius: 10px;
+	  background-color: rgba(192,255,192,0.7);
+	  color: #004000;
 	}
       -->
     </style>
@@ -86,9 +96,9 @@ else{
                                 $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
                                 }
 						if ($bfr=='running')
-							echo "機器人正在跑!!<br /><input type='submit' name='pause' value='暫停機器人'>";
+							echo "<div class='notice'>狀態：機器人正在跑!!</div><input type='submit' name='pause' value='暫停機器人'>";
 						elseif($bfr=='paused')
-							echo "機器人停下來了!!<br /><input type='submit' name='continue' value='繼續跑!'>";
+							echo "<div class='notice'>狀態：機器人停下來了!!</div><br /><input type='submit' name='continue' value='繼續跑!'>";
                         socket_set_nonblock($socket);
                         socket_close($socket);
                         unlink($socketname);
@@ -100,34 +110,37 @@ else{
 			<input type='submit' name='reloadres' value='重載詞彙庫'>
 			<input type='submit' name='relogin' value='重新登入'>			
 		</form>
-		<br /><br />說點什麼吧!
-		<p class='plurk_box'>
+		<div class='plurk_box'>
 		<form action='' method='POST'>
-		<input type='hidden' name='say'>
-		<input type='hidden' name='gotaction'>
-		  要說的話：
-		    <select name='qualifier'>
-		      <option value='says' selected='selected'>說</option>
-		      <option value='likes' >喜歡</option>
-		      <option value='shares' >分享</option>
-		      <option value='gives' >給</option>
-		      <option value='hates' >討厭</option>
-		      <option value='wants' >想要</option>
-		      <option value='has' >已經</option>
-		      <option value='will' >打算</option>
-		      <option value='asks' >問</option>
-		      <option value='wishs' >期待</option>
-		      <option value='was' >曾經</option>
-		      <option value='feels' >覺得</option>
-		      <option value='thinks' >想</option>
-		      <option value='is' >正在</option>
-		      <option value='hopes' >希望</option>
-		      <option value='needs' >需要</option>
-		      <option value='wonders' >好奇</option>
-		    </select>
-		<input type='text' name='plurk'><input type='submit' id='send-btn' value='發噗'>
+		  <input type='hidden' name='say' />
+		  <input type='hidden' name='gotaction' />
+		    <p>
+		      <select name='qualifier'>
+			<option value='says' selected='selected'>說</option>
+			<option value='likes' >喜歡</option>
+			<option value='shares' >分享</option>
+			<option value='gives' >給</option>
+			<option value='hates' >討厭</option>
+			<option value='wants' >想要</option>
+			<option value='has' >已經</option>
+			<option value='will' >打算</option>
+			<option value='asks' >問</option>
+			<option value='wishs' >期待</option>
+			<option value='was' >曾經</option>
+			<option value='feels' >覺得</option>
+			<option value='thinks' >想</option>
+			<option value='is' >正在</option>
+			<option value='hopes' >希望</option>
+			<option value='needs' >需要</option>
+			<option value='wonders' >好奇</option>
+		      </select>
+		      <input type='text' name='plurk'>
+		   </p>
+		   <p>
+		    <input type='submit' id='send-btn' value='發噗' />
+		  </p>
 		</form>
-		</p>
+		</div>
 <?php 
 if (isset($_POST['gotaction'])){
 ?>
@@ -166,10 +179,10 @@ if (isset($_POST['gotaction'])){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
 			if ($bfr=='echo')
-				echo "<br />效果十分顯著!!";
+				echo "效果十分顯著!!";
             }
 		else	
-			echo "<br />毫無反應，就只是個屍體。";
+			echo "毫無反應，就只是個屍體。";
 		}
 	if (isset($_POST['reloadset'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_SETTINGS ));
@@ -199,6 +212,7 @@ if (isset($_POST['gotaction'])){
     socket_close($socket);
     unlink($socketname);
 ?>
+
 </div>
 <?php
 	}
