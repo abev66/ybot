@@ -75,7 +75,7 @@ else{
 			<input type='submit' name='relogin' value='重新登入'>			
 		</form>
 		<br /><br />說點什麼吧!
-		<br /><form action='' method='POST'><input type='hidden' name='say'>
+		<br /><form action='' method='POST'><input type='hidden' name='say'><input type='hidden' name='gotaction'>
 		要說的話：<select name='qualifier'><option value='says' selected='selected'>
 		說</option><option value='likes' >喜歡</option><option value='shares' >分享</option>
 		<option value='gives' >給</option><option value='hates' >討厭</option>
@@ -147,8 +147,8 @@ if (isset($_POST['gotaction'])){
 		if ($bytes_sent)
 			echo"指令送出了!!";
 		}
-	if (isset($_POST['sayplurk'])){
-		$msg=json_encode(array("command" => CMD_SEND_PLURK,"content" => $_POST['plurk'],"lang" => "ch_tr","qualifier" => $_POST['qualifier'],"no_comments" => 0));
+	if (isset($_POST['say'])){
+		$msg=json_encode(array("command" => CMD_SEND_PLURK, "content" => $_POST['plurk'], "lang" => "ch_tr", "qualifier" => $_POST['qualifier'], "no_comments" => 0 ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
 			echo"訊息送出了!!";
