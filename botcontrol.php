@@ -82,7 +82,7 @@ else{
 		控制機器人吧!
 		<form name='control' action='' method='POST'><input type='hidden' name='gotaction'>
 		<?php  //check puuse info. 
-						include("command_flags.inc");
+			include("command_flags.inc");
                         $socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
                         $randomd=(string)rand();
                         $socketname="sockets/socket_ybot-client".$randomd; //genrate socket in random in case of conflict.
@@ -135,6 +135,7 @@ else{
 			<option value='wonders' >好奇</option>
 		      </select>
 		      <input type='text' name='plurk'>
+		      <input type='checkbox' name='no_comments' value='1' />禁止回應
 		   </p>
 		   <p>
 		    <input type='submit' id='send-btn' value='發噗' />
@@ -203,11 +204,13 @@ if (isset($_POST['gotaction'])){
 			echo "指令送出了!!";
 		}
 	if (isset($_POST['say'])){
-		$msg=json_encode(array("command" => CMD_SEND_PLURK, "content" => $_POST['plurk'], "lang" => "ch_tr", "qualifier" => $_POST['qualifier'], "no_comments" => 0 ));
+		include('plurk_lang_flags.inc');
+		$no_comments = ($_POST['no_comments'] == 1)? 1 : 0 ;
+		$msg=json_encode(array("command" => CMD_SEND_PLURK, "content" => $_POST['plurk'], "lang" => PLURK_LANG_CHINESE_TRADITIONAL, "qualifier" => $_POST['qualifier'], "no_comments" => $no_comments ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
 			echo "訊息送出了!!";
-		}
+		} 
     socket_set_nonblock($socket);
     socket_close($socket);
     unlink($socketname);
