@@ -115,7 +115,7 @@
     function run_command($str_command, $socket_server_side, $socket_client_side, $control_vars){
     
       // Decode command
-      $command = json_decode($str_command);
+      $command = json_decode($str_command, true);
       
       switch($command['command']){
       
@@ -209,8 +209,8 @@
     // Create Socket
     $bot_socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
     socket_bind($bot_socket, SOCKET_ADDR, 0);
-    chmod(SOCKET_ADDR, 777);
     socket_set_block($bot_socket);
+    chmod(SOCKET_ADDR, 777);
     
     //  Login Plurk
     $plurk = new plurk_api();
@@ -246,12 +246,12 @@
       // Get command from socket
       $cmd_buffer = '';
       $cmd_source = '';
-      @socket_recvfrom($socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
+      @socket_recvfrom($bot_socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
       
       while(!empty($cmd_buffer)){
 	$control_vars = run_command($cmd_buffer, $bot_socket, $cmd_source, $control_vars);
 	$cmd_buffer = '';
-	@socket_recvfrom($socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
+	@socket_recvfrom($bot_socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
       }
       
       $msg = array();
