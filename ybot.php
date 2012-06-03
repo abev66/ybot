@@ -345,10 +345,6 @@
       $control_vars['count'] = 0;
       $control_vars['relogin'] = false;
     }
-    
-    
-    // Reload configure
-    $config = dump_settings($data_source);
         
     // Sleep for a while
     sleep(1);
