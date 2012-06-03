@@ -38,9 +38,11 @@ else {
 	<div class='content' align='center'>
 		<?php //view all manager
 			if(isset($_POST['viewallmanager'])){
-				$result=mysqli_query($dblink,"SELECT * FROM administers");
+				$result=get_user_data($dblink);
 				echo "<table border='1' id='fortable' align='center'><th>account</th><th>authority</th><th></th><th></th>";
-				while($record=mysqli_fetch_assoc($result)){
+				foreach($result as $record){
+					if ($record['uid']==1)
+						continue;
 					$record['type']=='a' ? $record['type']='可修改設定及詞彙' : $record['type']='可修改詞彙';
 					echo "<tr><td>".$record['account']."</td><td>".$record['type'],"</td>";
 					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='submit' value='刪除'></form></td>";
