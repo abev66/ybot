@@ -231,18 +231,13 @@
       'count' => 0
     );
     
+    $loop_count = 0;
+    
     
     //  Outter loop
     while ($control_vars['runbot']) {
-      $control_vars['count'] += 1;
+      $control_vars['count']++;
       
-      //  Get Plurks
-      $pu = $plurk->get_plurks(date('c'), 30);
-      
-      //  Apply all friend requests
-      if( ($config['AUTO_ACCEPT_FRIENDS']=='true') && !$control_vars['pause'])
-	$plurk->add_all_as_friends();
-	
       // Get command from socket
       $cmd_buffer = '';
       $cmd_source = '';
@@ -253,10 +248,17 @@
 	$cmd_buffer = '';
 	@socket_recvfrom($bot_socket, $cmd_buffer, 65536, MSG_DONTWAIT, $cmd_source);
       }
-      
-      $msg = array();
-      
-      if(!$control_vars['pause']){
+
+      if( ($loop_count%$config['CHECK_INTERVAL'])==0 && !$control_vars['pause']) {
+	//  Get Plurks
+	$pu = $plurk->get_plurks(date('c'), 30);
+	
+	//  Apply all friend requests
+	if( ($config['AUTO_ACCEPT_FRIENDS']=='true'))
+	  $plurk->add_all_as_friends();
+	  
+	$msg = array();
+	
 	// Check each plurks.
 	foreach( $pu->plurks as $item ) {
 	  // dont reply by default.
@@ -316,21 +318,21 @@
 	    $mute_plurks[] = $item->plurk_id;
 	}
 
-      // Mark as Read or Mute 
-      if($config['MUTE_AFTER_RESPONSE'] == 'true') {
-	$read_plurks = array_merge($mute_plurks, $read_plurks);
-	$plurk->mute_plurks($read_plurks);
+	// Mark as Read or Mute 
+	if($config['MUTE_AFTER_RESPONSE'] == 'true') {
+	  $read_plurks = array_merge($mute_plurks, $read_plurks);
+	  $plurk->mute_plurks($read_plurks);
+	}
+	else if( empty($mute_plurks) )
+	  $plurk->mark_plurk_as_read($read_plurks);
+	else {
+	  $plurk->mark_plurk_as_read($read_plurks);
+	  $plurk->mute_plurks($mute_plurks);
+	}
+	// empty after finish
+	$read_plurks = array();
+	$mute_plurks = array();
       }
-      else if( empty($mute_plurks) )
-	$plurk->mark_plurk_as_read($read_plurks);
-      else {
-	$plurk->mark_plurk_as_read($read_plurks);
-	$plurk->mute_plurks($mute_plurks);
-      }
-      // empty after finish
-      $read_plurks = array();
-      $mute_plurks = array();
-    }
     
     // relogin every 4 hours
     if ( ( !$control_vars['pause'] && (($control_vars['count']*$config['CHECK_INTERVAL'])%14400) == 0 ) || $control_vars['relogin'] ) {
@@ -344,12 +346,14 @@
       $control_vars['relogin'] = false;
     }
     
+    
     // Reload configure
     $config = dump_settings($data_source);
         
     // Sleep for a while
-    sleep($config['CHECK_INTERVAL']);
+    sleep(1);
     
+   $loop_count++;
    }
    
    // Close socket
