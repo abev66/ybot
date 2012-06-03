@@ -52,7 +52,7 @@ else {
 				}
 			if (isset($_POST['delete'])){
 				remove_user($dblink,$_POST['delete']);
-				echo "remove sucessed!!";
+				echo "<div class='notice'>remove sucessed!!</div>";
 				}
 			if (isset($_POST['update'])){
 				echo "<form name='update' action='' method='POST'><input type='hidden' name='updatet' value='".$_POST['update']."'><input type='radio' name='uauth' value='a' /> 可控制機器人跟修改詞彙";
@@ -84,10 +84,10 @@ else {
 					add_user($dblink,$account,$pass,$type);
 					}
 				else
-					echo 'user already exists!!';
+					echo "<div class='notice'>user already exists!!</div>";
 				}
 			else
-				echo "please recheck password.";
+				echo "<div class='notice'>please recheck password.</div>";
 			}
 		db_close($dblink);
 		?>
