@@ -61,6 +61,8 @@ else{
 	  if($key == 'RESPONSE_MODE'){
 	      foreach(array('MENTION','ANYWAY','DISABLED') as $set)
 		echo "<input type='radio' name='newsets[$key]' value='$set' ".(($set == strtoupper($value))?'checked':'')." />$set";
+	  } else if($key == 'PLURK_PASSWORD') {
+	      echo "<input type='password' name='newsets[$key]' value='' />";
 	  } else if(strtolower($value) == 'true' || strtolower($value) == 'false') {
 	      if(strtolower($value)=='true'){
 		echo "<input type='radio' name='newsets[$key]' value='true' checked /> On";
@@ -72,7 +74,8 @@ else{
 	  } else
 	    echo "<input type='text' name='newsets[$key]' value='$value' />";
 	    
-	  echo "<input type='hidden' name='oldsets[$key]' value='$value' />";
+	  if($key != 'PLURK_PASSWORD')
+	    echo "<input type='hidden' name='oldsets[$key]' value='$value' />";
 	  echo '</td>';
 	  echo "\n</tr>\n";
 }
@@ -90,12 +93,13 @@ else{
 	update_setting($dblink, $key, $value);
       }
     }
-    header('Location: botsetting.php');
+     header('Location: botsetting.php');
  endif;
 ?>
 	</div>
 <?php
+db_close($dblink);
 } 
-db_close($dblink);?>
+?>
 </body>
 </html>
