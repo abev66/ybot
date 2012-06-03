@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php //session check
 session_start();
 if(!isset($_SESSION['uid'])){
@@ -20,6 +19,7 @@ else{
 <html>
 <head><title>account manage</title>
 <link rel="stylesheet" href="style.css" type="text/css" /></head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <body>
 	<div class='status'>
 		<?php echo "HI! ".$session_name." <a href='passwd.php'>change password<a> | <a href='logout.php'>logout</a>"?>

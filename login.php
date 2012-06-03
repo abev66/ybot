@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php 
 require('db_port.php');
 $dblink=db_init();
@@ -9,6 +8,7 @@ session_start();
 <head>
 	<title>login</title>
 	<link rel="stylesheet" href="style.css" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
 	<div class='banner' align='center'><img src="http://i.imgur.com/xQgmj.png" width="500" height="200" alt="歡迎來到登入頁面" /></div>
