@@ -18,7 +18,7 @@ else {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name." <a href='passwd.php'>change password<a> | <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name." <a href='passwd.php'>change password</a> | <a href='logout.php'>logout</a>"?>
 	</div>
 	<div class="banner">
 	<img src="http://i.imgur.com/WvfBK.png" width="500" height="100" alt="人員管理" />

@@ -20,7 +20,7 @@ else{
 </head>
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password<a> | <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password</a> | <a href='logout.php'>logout</a>"?>
 	</div>
 	<div class='banner' >
 		<img src="http://i.imgur.com/AMZRm.png" width="500" height="100" alt="詞彙編輯" />

@@ -16,7 +16,7 @@ else{
 </head>
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password<a>, <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password</a>, <a href='logout.php'>logout</a>"?>
 	</div>
 	我是首頁，已廢棄
 	<div class='link'>
