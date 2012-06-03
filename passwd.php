@@ -13,33 +13,51 @@ else{
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>change password</title>
 <link rel="stylesheet" href="style.css" type="text/css" />
+    <style type="text/css">
+      <!--
+	.box {
+	  display:block;
+	  margin: 1.5em auto;
+	  background-color: rgba(173,216,230,0.5);
+	  background-position: right bottom;
+	  padding: 1em;
+	  border-radius: 10px;
+	  opacity: 0.5px;
+	  text-align: center;
+	  width: 450px;
+	  line-height: 2em;
+	}
+
+    </style>
 </head>
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password<a>, <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password</a>, <a href='logout.php'>logout</a>"?>
 	</div>
-	<div class='link'>
-		<a href='tableedit.php'>table edit</a>
+	<div class='link'><ul>
 		<?php 
 		if($session_type=='a'){
-			echo "<a href='botcontrol.php'>robot control</a>";
+			echo "<li><a class='links' href='tableedit.php'>table edit</a></li> ";
+			echo "<li><a class='links' href='botcontrol.php'>robot control</a></li>";
 			}
 		if($session_uid==1){
-			echo "<a href='accountmanage.php'>account manage</a>";
+			echo "<li/><a class='links' href='accountmanage.php'>account manage</a><li>";
 			}
 		?>
-<br />Hey! wanna change password?<br />
+		</ul>
+	</div>
+<div class='box'>
+Hey! wanna change password?
 <form name='passwd' action='' method='POST'>
-<br />
 Your current password:<input type='password' name='oldpassword'><br />
 Your new password:<input type='password' name='pass'><br />
 retype new password:<input type='password' name='repass'><br />
 <input type='submit' name='passwd' value='set'></form>
+</div>
 <?php
 if(isset($_POST['passwd'])){
 	$pass=$_POST['pass'];
@@ -48,12 +66,12 @@ if(isset($_POST['passwd'])){
 	$tmp=get_user_data($dblink ,$session_name);
 	$currentpassword=$tmp['password'];
 	if ($oldpassword!=$currentpassword)
-		echo "invalid act!!<br />";
+		echo "<div class='notice-red'>invalid act!!</div>";
 	elseif($pass!=$repass)
-		echo "invalid act!!<br />";
+		echo "<div class='notice-red'>invalid act!!</div>";
 	else{
 		update_user_passwd($dblink, $session_name, $pass);
-		echo 'you did it!!';
+		echo "<div class='notice'>finish!</div>";
 		}
 	}
 	db_close($dblink);
