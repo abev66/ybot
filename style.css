@@ -101,4 +101,14 @@ a: visited {
 {
   color: #000000;
   background-color: #EAF2D3;
-}　　
+}
+
+.notice{
+  width: 80%;
+  display: block;
+  padding: 0.5em;
+  margin: 1.5em auto;
+  border-radius: 10px;
+  background-color: rgba(192,255,192,0.7);
+  color: #004000;
+}

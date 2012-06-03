@@ -42,15 +42,6 @@ else{
 	  text-indent: -9999px;
 	  border-radius: 5px;
 	}
-	.notice{
-	  width: 80%;
-	  display: block;
-	  padding: 0.5em;
-	  margin: 1.5em auto;
-	  border-radius: 10px;
-	  background-color: rgba(192,255,192,0.7);
-	  color: #004000;
-	}
       -->
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
