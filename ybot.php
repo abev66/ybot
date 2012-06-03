@@ -210,7 +210,7 @@
     $bot_socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
     socket_bind($bot_socket, SOCKET_ADDR, 0);
     socket_set_block($bot_socket);
-    chmod(SOCKET_ADDR, 777);
+    chmod(SOCKET_ADDR, 0777);
     
     //  Login Plurk
     $plurk = new plurk_api();
