@@ -35,6 +35,12 @@ else{
 	  background-position: center center;
 	  text-indent: -9999px;
 	}
+	.notice{
+	  width: 80%;
+	  display: block;
+	  margin: 1em auto;
+	  background-color: #C0FFC0;
+	}
       -->
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -120,13 +126,13 @@ else{
 		      <option value='wonders' >好奇</option>
 		    </select>
 		<input type='text' name='plurk'><input type='submit' id='send-btn' value='發噗'>
+		</form>
 		</p>
-
-	</div>
-</body>
-</html>
 <?php 
 if (isset($_POST['gotaction'])){
+?>
+<div class='notice'>
+<?php
                         $socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
                         $randomd=(string)rand();
                         $socketname="sockets/socket_ybot-client".$randomd; //genrate socket in random in case of conflict.
@@ -169,28 +175,34 @@ if (isset($_POST['gotaction'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_SETTINGS ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"指令送出了!!";
+			echo "指令送出了!!";
 		}
 	if (isset($_POST['reloadres'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_TABLE ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"指令送出了!!";
+			echo "指令送出了!!";
 		}
 	if (isset($_POST['relogin'])){
 		$msg=json_encode(array( 'command' => CMD_RELOGIN ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"指令送出了!!";
+			echo "指令送出了!!";
 		}
 	if (isset($_POST['say'])){
 		$msg=json_encode(array("command" => CMD_SEND_PLURK, "content" => $_POST['plurk'], "lang" => "ch_tr", "qualifier" => $_POST['qualifier'], "no_comments" => 0 ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"訊息送出了!!";
+			echo "訊息送出了!!";
 		}
     socket_set_nonblock($socket);
     socket_close($socket);
     unlink($socketname);
+?>
+</div>
+<?php
 	}
 ?>
+	</div>
+</body>
+</html>

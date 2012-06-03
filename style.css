@@ -23,9 +23,8 @@ body {
 }
 
 .botlink {
-  margin: auto;
+  float: left;
   text-align: center;
-  width: 18%;
 }
 
 .content {
