@@ -116,6 +116,7 @@ a: visited {
   border-radius: 10px;
   background-color: rgba(192,255,192,0.7);
   color: #004000;
+  text-align: center;
 }
 .notice-red{
   width: 80%;
@@ -125,4 +126,5 @@ a: visited {
   border-radius: 10px;
   background-color: rgba(255,140,140,0.7);
   color: #400000;
+  text-align: center;
 }
