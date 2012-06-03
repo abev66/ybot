@@ -67,10 +67,10 @@ else {
 		<form action='' method='post'><input type='hidden' name='viewallmanager'><input type='submit' value='click to view/refresh maneger list'></form>
 		<br /><img src="http://i.imgur.com/OczEo.png" alt="新增人員" width="200" height="70" align="absbottom" /><br />
 		<form action='' method='post'><input type='hidden' name='account_create'>
-			<img src="http://i.imgur.com/w3ouy.png" alt="ID" width="200" height="70" align="absbottom" /><input type='text' name='name'><br />
+			帳號<input type='text' name='name'><br />
 			密碼：<input type='password' name='pass'><br />
 			密碼確認：<input type='password' name='repass'><br />
-			<img src="http://i.imgur.com/ZtirX.png" alt="權限" width="200" height="70" align="absbottom" /><br />
+			權限<br />
 			<input type="radio" name="auth" value="a" /> 可控制機器人跟修改詞彙<input type="radio" name="auth" value="b" CHECKED/>僅可修改詞彙
 			<br /><input type='submit' value='新增'>
 		</form>
