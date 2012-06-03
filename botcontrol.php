@@ -33,6 +33,7 @@ else{
 	  height: 38px;
 	  background-image: url('images/plurkbuttom.png');
 	  background-position: center center;
+	  text-indent: -9999px;
 	}
       -->
     </style>
