@@ -5,6 +5,11 @@ body {
   background-position: right bottom;
 }
 
+form {
+  text-align: center;
+  margin: auto;
+}
+
 .status {
   position: fixed;
   top: 2px;

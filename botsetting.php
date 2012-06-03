@@ -41,7 +41,19 @@ else{
 	<a class='links' href='botsetting.php'>botsetting</a></li></ul>
 	</div>
 	<div class='content'><br />
-<?php if(!isset($_POST['update'])): ?>
+<?php if(isset($_POST['update'])): ?> 
+<div class="notice">更新：
+<?php
+    foreach($_POST['newsets'] as $key => $value) {
+      if( $value != $_POST['oldsets'][$key] ){
+	echo $key.'&nbsp;';
+	update_setting($dblink, $key, $value);
+      }
+    }
+?>
+</div>
+<? endif; ?>
+</div>
       <form action='' method='POST'>
 	<table border='1' id='fortable'>
 	  <thead>
@@ -85,18 +97,7 @@ else{
 	<input type='submit' name='update' value='儲存設定' />
 	<input type='button' value='取消修改' onclick='javascript: location.href="botsetting.php";' />
     </form>
-<?php
- else:
-    
-    foreach($_POST['newsets'] as $key => $value) {
-      if( $value != $_POST['oldsets'][$key] ){
-	update_setting($dblink, $key, $value);
-      }
-    }
-     header('Location: botsetting.php');
- endif;
-?>
-	</div>
+</div>
 <?php
 db_close($dblink);
 } 
