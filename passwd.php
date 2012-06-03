@@ -69,6 +69,8 @@ if(isset($_POST['passwd'])){
 		echo "<div class='notice-red'>invalid act!!</div>";
 	elseif($pass!=$repass)
 		echo "<div class='notice-red'>invalid act!!</div>";
+	elseif(strlen($pass)<6)
+		echo "<div class='notice-red'>password should be longer than 6 chars.</div>";
 	else{
 		update_user_passwd($dblink, $session_name, $pass);
 		echo "<div class='notice'>finish!</div>";
