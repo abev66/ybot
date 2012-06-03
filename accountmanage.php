@@ -1,19 +1,15 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php //session check
 session_start();
-if(!isset($_SESSION['uid'])){
-	header("location: index.php");
-	}
-elseif($_SESSION['uid']!=1){
-	header("location: index.php");
-	}
-else{
-	$session_uid=$_SESSION["uid"];
-	$session_name=$_SESSION["name"];
-	$session_type=$_SESSION["type"];
-	require('db_port.php');
-	$dblink=db_init();
-	}
+if(!isset($_SESSION['uid']) || $_SESSION['uid']!=1)
+    header("location: index.php");
+else {
+    $session_uid=$_SESSION["uid"];
+    $session_name=$_SESSION["name"];
+    $session_type=$_SESSION["type"];
+    require('db_port.php');
+    $dblink=db_init();
+}
 ?>
 
 <html>
