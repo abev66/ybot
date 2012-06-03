@@ -209,6 +209,7 @@
     // Create Socket
     $bot_socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
     socket_bind($bot_socket, SOCKET_ADDR, 0);
+    chmod(SOCKET_ADDR, 777);
     socket_set_block($bot_socket);
     
     //  Login Plurk
