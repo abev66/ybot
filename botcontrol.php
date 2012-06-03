@@ -95,9 +95,9 @@ else{
                                 $bfr='';
                                 $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
                                 }
-						if ($bfr=='running')
+						if ($bfr==FB_RUNNING)
 							echo "<div class='notice'>狀態：機器人正在跑!!</div><input type='submit' name='pause' value='暫停機器人'>";
-						elseif($bfr=='paused')
+						elseif($bfr==FB_PAUSED)
 							echo "<div class='notice'>狀態：機器人停下來了!!</div><br /><input type='submit' name='continue' value='繼續跑!'>";
                         socket_set_nonblock($socket);
                         socket_close($socket);
@@ -178,7 +178,7 @@ if (isset($_POST['gotaction'])){
         if($bytes_sent){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
-			if ($bfr=='echo')
+			if ($bfr==FB_ECHO)
 				echo "效果十分顯著!!";
             }
 		else	
