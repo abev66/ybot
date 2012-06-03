@@ -16,9 +16,28 @@ else{
 	}
 ?>
 <html>
-<head><title>botcontrol</title><link rel="stylesheet" href="style.css" type="text/css" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
+  <head>
+    <title>botcontrol</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <style type="text/css">
+      <!--
+	.plurk_box {
+	  display:block;
+	  margin: auto;
+	  background-color: #ADD8E6;
+	  background-image: url('images/plurk-logo.png');
+	  background-position: right bottom;
+	}
+	#send-btn {
+	  width: 81px;
+	  height: 38px;
+	  background-image: url('images/plurkbuttom.png');
+	  background-position: center center;
+	}
+      -->
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
 <body>
 	<div class='status'>
 		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password</a> | <a href='logout.php'>logout</a>"?>
@@ -75,16 +94,32 @@ else{
 			<input type='submit' name='relogin' value='重新登入'>			
 		</form>
 		<br /><br />說點什麼吧!
-		<br /><form action='' method='POST'><input type='hidden' name='say'><input type='hidden' name='gotaction'>
-		要說的話：<select name='qualifier'><option value='says' selected='selected'>
-		說</option><option value='likes' >喜歡</option><option value='shares' >分享</option>
-		<option value='gives' >給</option><option value='hates' >討厭</option>
-		<option value='wants' >想要</option><option value='has' >已經</option><option value='will' >打算</option>
-		<option value='asks' >問</option><option value='wishs' >期待</option>
-		<option value='was' >曾經</option><option value='feels' >覺得</option>
-		<option value='thinks' >想</option><option value='is' >正在</option>
-		<option value='hopes' >希望</option><option value='needs' >需要</option>option value='wonders' >好奇</option></select>
-		<input type='text' name='plurk'><input type='submit' value='發噗'><br /><br />
+		<p class='plurk_box'>
+		<form action='' method='POST'>
+		<input type='hidden' name='say'>
+		<input type='hidden' name='gotaction'>
+		  要說的話：
+		    <select name='qualifier'>
+		      <option value='says' selected='selected'>說</option>
+		      <option value='likes' >喜歡</option>
+		      <option value='shares' >分享</option>
+		      <option value='gives' >給</option>
+		      <option value='hates' >討厭</option>
+		      <option value='wants' >想要</option>
+		      <option value='has' >已經</option>
+		      <option value='will' >打算</option>
+		      <option value='asks' >問</option>
+		      <option value='wishs' >期待</option>
+		      <option value='was' >曾經</option>
+		      <option value='feels' >覺得</option>
+		      <option value='thinks' >想</option>
+		      <option value='is' >正在</option>
+		      <option value='hopes' >希望</option>
+		      <option value='needs' >需要</option>
+		      <option value='wonders' >好奇</option>
+		    </select>
+		<input type='text' name='plurk'><input type='submit' id='send-btn' value='發噗'>
+		</p>
 
 	</div>
 </body>
