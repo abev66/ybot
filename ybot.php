@@ -124,7 +124,7 @@
 	  break;
 	  
 	case CMD_GET_PAUSE_STATUS:
-	  $msg = json_encode( (!$control_vars['pause']) ? FB_RUNNING : FB_PAUSED );
+	  $msg = (!$control_vars['pause']) ? FB_RUNNING : FB_PAUSED ;
 	  socket_sendto($socket_server_side, $msg, strlen($msg), 0, $socket_client_side);
 	  break;
 	  
