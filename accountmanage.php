@@ -67,7 +67,7 @@ else {
 		<form action='' method='post'><input type='hidden' name='viewallmanager'><input type='submit' value='click to view/refresh maneger list'></form>
 		<br /><img src="http://i.imgur.com/OczEo.png" alt="新增人員" width="200" height="70" align="absbottom" /><br />
 		<form action='' method='post'><input type='hidden' name='account_create'>
-			帳號<input type='text' name='name'><br />
+			帳號：<input type='text' name='name'><br />
 			密碼：<input type='password' name='pass'><br />
 			密碼確認：<input type='password' name='repass'><br />
 			權限<br />
