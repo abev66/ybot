@@ -21,7 +21,7 @@ else{
 </head>
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password<a> | <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password</a> | <a href='logout.php'>logout</a>"?>
 	</div>
 	<div class='banner'>
 		<img src="http://i.imgur.com/kMqvd.png" width="500" height="100" alt="控制" />
@@ -60,9 +60,9 @@ else{
                                 $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
                                 }
 						if ($bfr=='running')
-							echo "<input type='submit' name='pause' value='暫停機器人'>";
+							echo "機器人正在跑!!<br /><input type='submit' name='pause' value='暫停機器人'>";
 						elseif($bfr=='paused')
-							echo "<input type='submit' name='continue' value='繼續跑!'>";
+							echo "機器人停下來了!!<br /><input type='submit' name='continue' value='繼續跑!'>";
                         socket_set_nonblock($socket);
                         socket_close($socket);
                         unlink($socketname);
@@ -73,9 +73,19 @@ else{
 			<input type='submit' name='reloadset' value='重載設定'>
 			<input type='submit' name='reloadres' value='重載詞彙庫'>
 			<input type='submit' name='relogin' value='重新登入'>			
-			<input type='submit' name='say' value='發噗'>
 		</form>
-		
+		<br /><br />說點什麼吧!
+		<br /><form action='' method='POST'><input type='hidden' name='say'>
+		要說的話：<select name='qualifier'><option value='says' selected='selected'>
+		說</option><option value='likes' >喜歡</option><option value='shares' >分享</option>
+		<option value='gives' >給</option><option value='hates' >討厭</option>
+		<option value='wants' >想要</option><option value='has' >已經</option><option value='will' >打算</option>
+		<option value='asks' >問</option><option value='wishs' >期待</option>
+		<option value='was' >曾經</option><option value='feels' >覺得</option>
+		<option value='thinks' >想</option><option value='is' >正在</option>
+		<option value='hopes' >希望</option><option value='needs' >需要</option>option value='wonders' >好奇</option></select>
+		<input type='text' name='plurk'><input type='submit' value='發噗'><br /><br />
+
 	</div>
 </body>
 </html>
@@ -87,25 +97,25 @@ if (isset($_POST['gotaction'])){
                         socket_bind($socket, $socketname);
                         socket_set_block($socket);
                         chmod($socketname, 0777);
-	if (isset($_POST['say'])){
-		echo "<br /><form action='' method='POST'>";
-		echo "要說的話：<select name='qualifier'><option value='says' selected='selected'>";
-		echo "說</option><option value='likes' >喜歡</option><option value='shares' >分享</option>";
-		echo "<option value='gives' >給</option><option value='hates' >討厭</option>";
-		echo "<option value='wants' >想要</option><option value='has' >已經</option><option value='will' >打算</option>";
-		echo "<option value='asks' >問</option><option value='wishs' >期待</option>";
-		echo "<option value='was' >曾經</option><option value='feels' >覺得</option>";
-		echo "<option value='thinks' >想</option><option value='is' >正在</option>";
-		echo "<option value='hopes' >希望</option><option value='needs' >需要</option>option value='wonders' >好奇</option></select>";
-		echo "<input type='text' name='plurk'><input type='submit' value='發噗'><br /><br />";
-		}
 	if (isset($_POST['pause'])){
 		$msg=json_encode(array( 'command' => CMD_PAUSE ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
+        if($bytes_sent){
+            $bfr='';
+            $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
+			if($bfr=='okay')
+				header("location: botcontrol.php");
+            }
 		}
 	if (isset($_POST['continue'])){
 		$msg=json_encode(array( 'command' => CMD_CONTINUE ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
+        if($bytes_sent){
+            $bfr='';
+            $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
+			if($bfr=='okay')
+				header("location: botcontrol.php");
+            }
 		}
 	if (isset($_POST['poke'])){
 		$msg=json_encode(array( 'command' => CMD_PING ));
@@ -114,9 +124,10 @@ if (isset($_POST['gotaction'])){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
 			if ($bfr=='echo')
-				echo "效果十分顯著!!";
+				echo "<br />效果十分顯著!!";
             }
-		echo "毫無反應，就只是個屍體。";
+		else	
+			echo "<br />毫無反應，就只是個屍體。";
 		}
 	if (isset($_POST['reloadset'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_SETTINGS ));
