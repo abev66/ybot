@@ -80,7 +80,7 @@ else{
 </body>
 </html>
 <?php 
-if isset($_POST['gotaction']){
+if (isset($_POST['gotaction'])){
                         $socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
                         $randomd=(string)rand();
                         $socketname="sockets/socket_ybot-client".$randomd; //genrate socket in random in case of conflict.
@@ -114,33 +114,33 @@ if isset($_POST['gotaction']){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
 			if ($bfr=='echo')
-				echo "效果十分顯著!!"
+				echo "效果十分顯著!!";
             }
-		echo "毫無反應，就只是個屍體。"
+		echo "毫無反應，就只是個屍體。";
 		}
 	if (isset($_POST['reloadset'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_SETTINGS ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"指令送出了!!"
+			echo"指令送出了!!";
 		}
 	if (isset($_POST['reloadres'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_TABLE ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"指令送出了!!"
+			echo"指令送出了!!";
 		}
 	if (isset($_POST['relogin'])){
 		$msg=json_encode(array( 'command' => CMD_RELOGIN ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"指令送出了!!"
+			echo"指令送出了!!";
 		}
 	if (isset($_POST['sayplurk'])){
 		$msg=json_encode(array("command" => CMD_SEND_PLURK,"content" => $_POST['plurk'],"lang" => "ch_tr","qualifier" => $_POST['qualifier'],"no_comments" => 0));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo"訊息送出了!!"
+			echo"訊息送出了!!";
 		}
     socket_set_nonblock($socket);
     socket_close($socket);
