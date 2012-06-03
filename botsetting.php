@@ -19,7 +19,7 @@ else{
 </head>
 <body>
 	<div class='status'>
-		<?php echo "HI! ".$session_name.", <a href='passwd.php'>change password</a>, <a href='logout.php'>logout</a>"?>
+		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password</a>, <a href='logout.php'>logout</a>"?>
 	</div>
 	<div class='banner'>
 	<img src="http://i.imgur.com/wvLcp.png" alt="設定" width="500" height="100" />
