@@ -79,15 +79,17 @@ else {
 			$pass=$_POST['pass'];
 			$account=$_POST['name'];
 			$type=$_POST['auth'];
-			if($pass==$_POST['repass']){
+			if(strlen($account) < 3){
+			  echo "<div class='notice-red'>帳號至少要 3 個字元！</div>";
+			} else	if($pass==$_POST['repass'] && strlen($pass)>6){
 				if (!get_user_data($dblink,$account)){	
 					add_user($dblink,$account,$pass,$type);
 					}
 				else
-					echo "<div class='notice'>user already exists!!</div>";
+					echo "<div class='notice-red'>user already exists!!</div>";
 				}
 			else
-				echo "<div class='notice'>please recheck password.</div>";
+				echo "<div class='notice-red'>please recheck password.</div>";
 			}
 		db_close($dblink);
 		?>
