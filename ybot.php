@@ -31,8 +31,9 @@
     require('plurk_api.php');
     require('db_port.php');
 
-    // command flags
+    // include flags
     include('command_flags.inc');
+    include('plurk_lang_flags.inc');
 
 //---------- Functions ------------
     
@@ -142,7 +143,6 @@
 	  global $plurk;
 	  
 	  // Fill data
-	  include('plurk_lang_flags.inc');
 	  $lang = isset($command['lang']) ? $command['lang'] : PLURK_LANG_CHINESE_TRADITIONAL;
 	  $qualifier = isset($command['qualifier']) ? $command['qualifier'] : 'says';
 	  $no_comments = isset($command['no_comments']) ? $command['no_comments'] : 0;
