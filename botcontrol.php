@@ -126,7 +126,7 @@ else{
 			<option value='needs' >需要</option>
 			<option value='wonders' >好奇</option>
 		      </select>
-		      <input type='text' name='plurk'>
+		      <input type='text' name='plurk' maxlength='140' />
 		      <input type='checkbox' name='no_comments' value='1' />禁止回應
 		   </p>
 		   <p>
