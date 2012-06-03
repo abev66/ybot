@@ -120,7 +120,9 @@ else{
 		關鍵字：<input type='text' name='keyword'>請用 | 來區別多個關鍵字<br />
 		要回應的話：
 					<select name="qualifier">
-					<option value="says" selected="selected">說</option><option value="likes" >喜歡</option>
+					<option value=":">:(自由發揮)</option>
+					<option value="says" selected="selected">說</option>
+					<option value="likes" >喜歡</option>
 					<option value="shares" >分享</option>
 					<option value="gives" >給</option>
 					<option value="hates" >討厭</option>

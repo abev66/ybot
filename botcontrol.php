@@ -107,6 +107,7 @@ else{
 		  <input type='hidden' name='gotaction' />
 		    <p>
 		      <select name='qualifier'>
+			<option value=":">:(自由發揮)</option>
 			<option value='says' selected='selected'>說</option>
 			<option value='likes' >喜歡</option>
 			<option value='shares' >分享</option>
