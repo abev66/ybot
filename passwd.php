@@ -1,6 +1,6 @@
 <?php //session check
 session_start();
-if(!isset($_SESSION['ybot_uid'])){
+if(!isset($_SESSION['_ybot_uid'])){
 	header("location: login.php");
 	}
 else{
