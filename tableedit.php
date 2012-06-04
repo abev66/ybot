@@ -80,8 +80,8 @@ else{
 		if (isset($_GET['responsea'])){
 			$key=$_GET['keyword'];
 			if(!remove_relation($dblink, $_GET['responsea'],$key))
-				echo "relation deleted";
-				header("location: tableedit.php");
+                echo "<script type='text/javascript'>alert('delete keyword ".$key." sucess!');</script>";
+                header("Refresh:1;url=tableedit.php");
 			}
 		if (isset($_POST['resaddkey'])){
 			echo "<form action='' method='POST'><input type='hidden' name='resaddkeyres' value='".$_POST['resaddkey']."'>要新增的關鍵字：";
@@ -92,7 +92,8 @@ else{
 			$keyword=trim($keyword);
 			$keyword=explode('|',$keyword);
 			add_keywords($dblink,$keyword);
-			create_relation($dblink,$_POST['resaddkeyres'],$keyword);			
+			create_relation($dblink,$_POST['resaddkeyres'],$keyword);
+			echo "add suscessd!!"
 			}		
 		if (isset($_POST['updater'])){
 			echo "<form action='' method='POST'><input type='hidden' name='oldresponse' value='".$_POST['updater']."'><input type='hidden' name='oldqualifier' value='".$_POST['updaterq']."'>";
