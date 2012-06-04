@@ -85,7 +85,8 @@ else{
                         if($bytes_sent){
                                 $bfr='';
                                 $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
-                                }
+                        } else
+			  echo "<div class='notice-red'>狀態：掛掉了？！</div>";
 						if ($bfr==FB_RUNNING)
 							echo "<div class='notice'>狀態：機器人正在跑!!</div><input type='submit' name='pause' value='暫停機器人'>";
 						elseif($bfr==FB_PAUSED)
@@ -136,9 +137,6 @@ else{
 		</div>
 <?php 
 if (isset($_POST['gotaction'])){
-?>
-<div class='notice'>
-<?php
                         $socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
                         $randomd=(string)rand();
                         $socketname="sockets/socket_ybot-client".$randomd; //genrate socket in random in case of conflict.
@@ -172,28 +170,34 @@ if (isset($_POST['gotaction'])){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
 			if ($bfr==FB_ECHO)
-				echo "效果十分顯著!!";
+				echo "<div class='notice'>效果十分顯著!!";
             }
 		else	
-			echo "毫無反應，就只是個屍體。<br />看起來機器人應該是掛了，請聯絡系統管理員。";
+			echo "<div class='notice-red'>毫無反應，就只是個屍體。";
 		}
 	if (isset($_POST['reloadset'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_SETTINGS ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo "指令送出了!!";
+			echo "<div class='notice'>指令送出了!!";
+		else
+			echo "<div class='notice-red'>指令未送出。";
 		}
 	if (isset($_POST['reloadres'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_TABLE ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo "指令送出了!!";
+			echo "<div class='notice'>指令送出了!!";
+		else
+			echo "<div class='notice-red'>指令未送出。";
 		}
 	if (isset($_POST['relogin'])){
 		$msg=json_encode(array( 'command' => CMD_RELOGIN ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo "指令送出了!!";
+			echo "<div class='notice'>指令送出了!!";
+		else
+			echo "<div class='notice-red'>指令未送出。";
 		}
 	if (isset($_POST['say'])){
 		include('plurk_lang_flags.inc');
@@ -201,7 +205,9 @@ if (isset($_POST['gotaction'])){
 		$msg=json_encode(array("command" => CMD_SEND_PLURK, "content" => $_POST['plurk'], "lang" => PLURK_LANG_CHINESE_TRADITIONAL, "qualifier" => $_POST['qualifier'], "no_comments" => $no_comments ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
-			echo "訊息送出了!!";
+			echo "<div class='notice'>訊息送出了!!";
+		else
+			echo "<div class='notice-red'>訊息未送出。";
 		} 
     socket_set_nonblock($socket);
     socket_close($socket);
