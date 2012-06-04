@@ -61,7 +61,7 @@ else{
 			if (!empty($_POST['keyreply'])){
 				$tmp=array();
 				foreach($result as $i)
-					if (strpos($i['response'], trim($_POST['keyreply']))){
+					if (strpos($i['response'], trim($_POST['keyreply'])) !== false){
 						$tmp[]=$i;
 					}
 				$result=$tmp;
