@@ -175,7 +175,7 @@ if (isset($_POST['gotaction'])){
 				echo "效果十分顯著!!";
             }
 		else	
-			echo "毫無反應，就只是個屍體。";
+			echo "毫無反應，就只是個屍體。<br />看起來機器人應該是掛了，請聯絡系統管理員。";
 		}
 	if (isset($_POST['reloadset'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_SETTINGS ));
