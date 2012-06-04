@@ -31,7 +31,7 @@ session_start();
 			$_SESSION["_ybot_uid"] = $result['uid'];
 			$_SESSION["_ybot_name"] = $result['account'];
 			$_SESSION["_ybot_type"] = $result['type'];
-			echo "welcom back, ",$result['account'],"<br /><br />redirecting....";
+			echo "welcome back, ",$result['account'],"<br /><br />redirecting....";
 			header("Refresh:1;url=index.php");
 			}
 		}
