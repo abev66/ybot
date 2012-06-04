@@ -180,18 +180,24 @@ if (isset($_POST['gotaction'])){
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
 			echo "<div class='notice'>指令送出了!!";
+		else
+			echo "<div class='notice-red'>指令未送出。";
 		}
 	if (isset($_POST['reloadres'])){
 		$msg=json_encode(array( 'command' => CMD_RELOAD_TABLE ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
 			echo "<div class='notice'>指令送出了!!";
+		else
+			echo "<div class='notice-red'>指令未送出。";
 		}
 	if (isset($_POST['relogin'])){
 		$msg=json_encode(array( 'command' => CMD_RELOGIN ));
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
 			echo "<div class='notice'>指令送出了!!";
+		else
+			echo "<div class='notice-red'>指令未送出。";
 		}
 	if (isset($_POST['say'])){
 		include('plurk_lang_flags.inc');
@@ -200,6 +206,8 @@ if (isset($_POST['gotaction'])){
 		$bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
 		if ($bytes_sent)
 			echo "<div class='notice'>訊息送出了!!";
+		else
+			echo "<div class='notice-red'>訊息未送出。";
 		} 
     socket_set_nonblock($socket);
     socket_close($socket);
