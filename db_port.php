@@ -282,6 +282,36 @@
       return $result ? NULL : mysqli_error($db);
   }
 
+  function remove_relation($db, $sentence, $keyword) {
+    $kid = getkid($db, $keyword);
+    $rid = getrid($db, $sentence);
+    
+    if(($kid != NULL) && ($rid != NULL)) {
+      $result = mysqli_query($db, "DELETE FROM ".TABLE_RELATIONS." WHERE rid=$rid AND kid=$kid ;");
+      return $result ? NULL : mysqli_error($db);
+    } else
+      return mysqli_error($db);
+  }
+  
+  function getkid($db, $keyword) {
+    $result = mysqli_query($db, "SELECT kid FROM ".TABLE_KEYWORDS." WHERE keyword='$keyword';");
+    
+    if($result) {
+      $temp = mysqli_fetch_row($result);
+      return $temp[0];
+    } else
+      return NULL;
+  }
+  
+  function getrid($db, $response) {
+    $result = mysqli_query($db, "SELECT rid FROM ".TABLE_RESPONSES." WHERE response='$response';");
+    
+    if($result) {
+      $temp = mysqli_fetch_row($result);
+      return $temp[0];
+    } else
+      return NULL;
+  }
   
 // Setting Managemant
 
