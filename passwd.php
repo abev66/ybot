@@ -1,14 +1,14 @@
 <?php //session check
 session_start();
-if(!isset($_SESSION['uid'])){
+if(!isset($_SESSION['ybot_uid'])){
 	header("location: login.php");
 	}
 else{
 	require('db_port.php');
 	$dblink=db_init();
-	$session_uid=$_SESSION["uid"];
-	$session_name=$_SESSION["name"];
-	$session_type=$_SESSION["type"];
+	$session_uid=$_SESSION["_ybot_uid"];
+	$session_name=$_SESSION["_ybot_name"];
+	$session_type=$_SESSION["_ybot_type"];
 	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

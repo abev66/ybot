@@ -1,10 +1,10 @@
 ﻿<?php
   session_start();
   
-  if(!isset($_SESSION['uid']))
+  if(!isset($_SESSION['_ybot_uid']))
     header("location: index.php");
   else {
-    unset($_SESSION["uid"], $_SESSION["name"], $_SESSION["type"]);
+    unset($_SESSION["_ybot_uid"], $_SESSION["_ybot_name"], $_SESSION["_ybot_type"]);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>

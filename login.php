@@ -28,9 +28,9 @@ session_start();
 		else{
 			db_close($dblink);
 			session_regenerate_id(true);
-			$_SESSION["uid"] = $result['uid'];
-			$_SESSION["name"] = $result['account'];
-			$_SESSION["type"] = $result['type'];
+			$_SESSION["_ybot_uid"] = $result['uid'];
+			$_SESSION["_ybot_name"] = $result['account'];
+			$_SESSION["_ybot_type"] = $result['type'];
 			echo "welcom back, ",$result['account'],"<br /><br />redirecting....";
 			header("Refresh:1;url=index.php");
 			}
