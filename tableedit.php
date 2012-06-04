@@ -73,13 +73,13 @@ else{
 				echo "<td><form action='' method='POST'><input type='hidden' name='updater' value='".$i['response']."'><input type='hidden' name='updaterq' value='".$i['qualifier']."'>";
 				echo "<input type='submit' value='修改'></form></td><td><form action='' method='POST'><input type='hidden' name='resaddkey' value='".$i['response']."'><input type='submit' value='新增關鍵字'></form></td><td>";
 				foreach($i['keywords'] as $va)
-					echo "<a href='tableedit.php?responsea=".$i['response']."&keyword=".$va."'>".$va."</a>  ";
+					echo "<a href='tableedit.php?".htmlentities("responsea=".urlencode($i['response'])."&keyword=".urlencode($va))."'>".$va."</a>  ";
 				}
 			echo "</td></tr></table>";
 			}
 		if (isset($_GET['responsea'])){
-			$key=array($_GET['keyword']);
-			if(!delete_relation($dblink, $_GET['responsea'],$key))
+			$key=$_GET['keyword'];
+			if(!remove_relation($dblink, $_GET['responsea'],$key))
 				echo "relation deleted";
 				header("location: tableedit.php");
 			}
