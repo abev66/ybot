@@ -97,7 +97,7 @@ else{
 
 		?>
 
-			<input type='submit' name='poke' value='戳一下'>
+			<!-- <input type='submit' name='poke' value='戳一下'> -->
 			<input type='submit' name='reloadset' value='重載設定'>
 			<input type='submit' name='reloadres' value='重載詞彙庫'>
 			<input type='submit' name='relogin' value='重新登入'>			
