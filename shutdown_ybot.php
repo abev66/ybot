@@ -28,7 +28,7 @@ if(socket_sendto($socket, $cmd_to_send, strlen($cmd_to_send), 0, SERVER_SOCKET )
 else
   echo "Failed!";
 
-echo "\nClose Socket.";
+echo "\nClose Socket.\n";
 socket_set_nonblock($socket);
 socket_close($socket);
 unlink($socketname);
