@@ -12,7 +12,7 @@ echo "\nBind client side socket...";
 socket_bind($socket, $socketname);
 socket_set_block($socket);
 chmod($socketname, 0777);
-$cmd_to_send = json_encode(array( 'command' => CMD_CONTINUE ));
+$cmd_to_send = json_encode(array( 'command' => CMD_EXIT ));
 
 echo "\nTry to send command to server...";
 if(socket_sendto($socket, $cmd_to_send, strlen($cmd_to_send), 0, SERVER_SOCKET )){
