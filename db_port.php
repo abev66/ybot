@@ -162,6 +162,14 @@
     return $result ? $ret : mysqli_error($db);
   }
 
+// list response's all keywords
+  function list_relation_response($db, $response){
+	$result=mysqli_query($db,"SELECT b.keyword FROM ".TABLE_RESPONSES." as a, ".TABLE_KEYWORDS." as b, ".TABLE_RELATIONS." as c WHERE a.response LIKE '%".command_escape($response)."%' AND a.rid=c.rid AND b.kid=c.kid ;");
+	while ($record=mysqli_fetch_assoc($result))
+		$ret[]=$record;	
+    return $result ? $ret : mysqli_error($db);
+	}
+
   
 // Administer Managemant
 
