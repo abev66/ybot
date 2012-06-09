@@ -107,6 +107,13 @@
     return $result ? $ret : mysqli_error($db);
   }
   
+// list keyword's all responses.
+  function list_relation_keyword($db, $keyword){
+	$result=mysqli_query($db,"SELECT a.qualifier, a.response FROM ".TABLE_RESPONSES." as a, ".TABLE_KEYWORDS." as b, ".TABLE_RELATIONS." as c WHERE b.keyword LIKE '%".command_escape($keyword)."%' AND a.rid=c.rid AND b.kid=c.kid ;");
+	while ($record=mysqli_fetch_assoc($result))
+		$ret[]=$record;	
+    return $result ? $ret : mysqli_error($db);
+	}
   
 // Sentenses Managemant
 
