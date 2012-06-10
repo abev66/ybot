@@ -69,7 +69,7 @@
 	  }
       }
     } else {
-      $result = mysqli_query($db, 'DELETE FROM '.TABLE_KEYWORDS.' WHERE \''.command_escape($keywords).'\';');
+      $result = mysqli_query($db, 'DELETE FROM '.TABLE_KEYWORDS.' WHERE keyword=\''.command_escape($keywords).'\';');
       
       if(!$result)
 	$ret = mysqli_error($db);
