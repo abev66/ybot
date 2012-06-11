@@ -1,7 +1,7 @@
 <?php //session check
 session_start();
 if(!isset($_SESSION['_ybot_uid'])){
-	header("location: login.php");
+	header("Location: login.php");
 	}
 else{
 	require('db_port.php');

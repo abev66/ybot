@@ -1,90 +1,146 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<?php //session check
-session_start();
-if(!isset($_SESSION['_ybot_uid']) || $_SESSION['_ybot_uid']!=1)
-    header("location: index.php");
-else {
-    $session_uid=$_SESSION["_ybot_uid"];
-    $session_name=$_SESSION["_ybot_name"];
-    $session_type=$_SESSION["_ybot_type"];
-    require('db_port.php');
-    $dblink=db_init();
+﻿<?php 
+session_start(); 
+if($_SESSION['_ybot_uid']!=1 || !isset($_SESSION['_ybot_uid'])){
+	header('Location: login.php');
 }
+else{
+	require('db_port.php');
+	$dblink = db_init();
 ?>
-
+<!DOCTYPE html>
 <html>
-<head><title>account manage</title>
-<link rel="stylesheet" href="style.css" type="text/css" /></head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<body>
-	<div class='status'>
-		<?php echo "HI! ".$session_name." | <a href='passwd.php'>change password</a> | <a href='logout.php'>logout</a>"?>
-	</div>
-	<div class="banner">
-	<img src="http://i.imgur.com/WvfBK.png" width="500" height="100" alt="人員管理" />
-	</div>
-	<div class='link'><ul>
-		<?php 
-		if($session_type=='a'){
-			echo "<li><a class='links' href='tableedit.php'>table edit</a></li> ";
-			echo "<li><a class='links' href='botcontrol.php'>robot control</a></li>";
-			}
-		if($session_uid==1){
-			echo "<li/><a class='links' href='accountmanage.php'>account manage</a><li>";
-			}
-		?>
-		</ul>
-	</div><br />
-	<div class='content' align='center'>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ybot - Account manage</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+	    <style type='text/css'>
+     <!--
+      .add input[type='text'],.add input[type='password'] {
+	width: 100%;
+	margin-left: auto;
+	display:block;
+	margin-bottom: 10px;
+	border: 1px solid #999;
+	border-radius: 3px;
+      }
+    .add input[type='submit']{
+	display: block;
+	margin: 0.8em auto 0;
+      }
+      
+      /* Login Window */
+      .add {
+	background: #FFF;
+	opacity: 0.7;
+	border-radius: 5px;
+	display: block;
+	margin: 2em auto;
+	padding: 2em 2.5em;
+	max-width: 460px;
+	text-align: left;
+	vertical-align: middle;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+	-moz-transition: opacity 0.3s;
+	-webkit-transition: opacity 0.3s;
+	-o-transition: opacity 0.3s;
+      }
+	
+      h3 {
+	margin: 12px auto;
+	font-weight: bold;
+	font-size: 133%;
+	display:block;
+	font-weight: normal;
+	text-align: center;
+      }
+      
+      .add:hover{
+	opacity: 1;
+      }
+     -->
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+	<?php include('header.inc'); ?>
+	<?php include('navbar.inc'); ?>
+		<form class='search' action='' method='GET'>
+			<input type='text' name='searchw'>
+			<input id='search-btn' type='submit' value='search'>
+		</form>
+		<h3>Account List</h3>
+		<table><th>Account</th><th>Type</th><th colspan='2'>Action</th>
 		<?php //view all manager
-			if(isset($_POST['viewallmanager'])){
+			if(!isset($_GET['searchw'])){
 				$result=get_user_data($dblink);
-				echo "<table border='1' id='fortable' align='center'><th>account</th><th>authority</th><th></th><th></th>";
 				foreach($result as $record){
 					if ($record['uid']==1)
 						continue;
-					$record['type']=='a' ? $record['type']='可修改設定及詞彙' : $record['type']='可修改詞彙';
+					$record['type']=='a'? $record['type']='A' : $record['type']='B';
 					echo "<tr><td>".$record['account']."</td><td>".$record['type'],"</td>";
-					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='submit' value='刪除'></form></td>";
-					echo "<td><form action='' method='POST'><input type='hidden' name='update' value='".$record['account']."'><input type='submit' value='修改'></form></td></tr>";
+					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='submit' value='Delete' title='Destroy this account!!'></form></td>";
+					echo "<td><form action='' method='POST'><input type='hidden' name='update' value='".$record['account']."'><input type='hidden' name='updatet' value='".$record['type']."'><input type='submit' value='Switch' title='Switch Account Type'></form></td></tr>";
 					}
-				echo "</table>";
 				}
-			if (isset($_POST['delete'])){
-				remove_user($dblink,$_POST['delete']);
-				echo "<div class='notice'>remove sucessed!!</div>";
-				}
-			if (isset($_POST['update'])){
-				echo "<form name='update' action='' method='POST'><input type='hidden' name='updatet' value='".$_POST['update']."'><input type='radio' name='uauth' value='a' /> 可控制機器人跟修改詞彙";
-				echo "<input type='radio' name='uauth' value='b' CHECKED>僅可修改詞彙<br /><input type='submit' value='修改'></form>";
-
-				}
-			if (isset($_POST['updatet'])){
-				update_user_type($dblink,$_POST['updatet'],$_POST['uauth']);
-				echo "update sucessed!!";
+			if(isset($_GET['searchw'])){
+				$result=get_user_data($dblink);
+				if (!empty($_GET['searchw'])){
+					$tmp=array();
+					foreach($result as $i)
+						if (strpos($i['account'], trim($_GET['searchw'])) !== false){
+							$tmp[]=$i;
+						}
+					$result=$tmp;
+					}
+				foreach($result as $record){
+					if ($record['uid']==1)
+						continue;
+					$record['type']=='a'? $record['type']='A' : $record['type']='B';
+					echo "<tr><td>".$record['account']."</td><td>".$record['type'],"</td>";
+					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='submit' value='Delete' title='Destroy this account!!'></form></td>";
+					echo "<td><form action='' method='POST'><input type='hidden' name='update' value='".$record['account']."'><input type='hidden' name='updatet' value='".$record['type']."'><input type='submit' value='Switch' title='Switch Account Type'></form></td></tr>";
+					}
 				}
 		?>
-		<form action='' method='post'><input type='hidden' name='viewallmanager'><input type='submit' value='click to view/refresh maneger list'></form>
-		<br /><img src="http://i.imgur.com/OczEo.png" alt="新增人員" width="200" height="70" align="absbottom" /><br />
+		</table>
+		<?php
+			if (isset($_POST['delete'])){
+				remove_user($dblink,$_POST['delete']);
+				db_close($dblink);
+				header('location: accountmanage.php');
+				}
+			if (isset($_POST['updatet'])){
+				$type = ($_POST['updatet']=='A' ? 'b' : 'a');
+				if (!update_user_type($dblink,$_POST['update'],$type)){
+					db_close($dblink);
+					header('Location: accountmanage.php');
+					}
+				}
+		?>
+		<div style='font-size: 90%; text-align: center;'>a:can control robot and edit keywords and responses, b:can only edit keywords and responses</div>
+		<div class='add'>
+		<h3>Add new user</h3>
 		<form action='' method='post'><input type='hidden' name='account_create'>
-			帳號：<input type='text' name='name'><br />
-			密碼：<input type='password' name='pass'><br />
-			密碼確認：<input type='password' name='repass'><br />
-			權限<br />
-			<input type="radio" name="auth" value="a" /> 可控制機器人跟修改詞彙<input type="radio" name="auth" value="b" CHECKED/>僅可修改詞彙
-			<br /><input type='submit' value='新增'>
+			Account name<input type='text' name='name'><br />
+			Password<input type='password' name='pass'><br />
+			Confirm password<input type='password' name='repass'><br />
+			<div style='text-align: center'>Type
+			<input type="radio" name="auth" value="a" />A<input type="radio" name="auth" value="b" CHECKED/>B</div>
+			<br /><input type='submit' value='add new user'>
 		</form>
+		</div>
 		<?php //add manager 
 		if(isset($_POST['account_create'])){
 			$pass=$_POST['pass'];
 			$account=$_POST['name'];
 			$type=$_POST['auth'];
 			if(strlen($account) < 3){
-			  echo "<div class='notice-red'>帳號至少要 3 個字元！</div>";
+			  echo "<div class='notice-red'>please make account name longer</div>";
 			} else	if($pass==$_POST['repass'] && strlen($pass)>6){
 				if (!get_user_data($dblink,$account)){	
 					add_user($dblink,$account,$pass,$type);
-					echo "user ".$account." has created!!";
+					db_close($dblink);
+					header('Location: accountmanage.php');
 					}
 				else
 					echo "<div class='notice-red'>user already exists!!</div>";
@@ -92,8 +148,10 @@ else {
 			else
 				echo "<div class='notice-red'>please recheck password.</div>";
 			}
-		db_close($dblink);
 		?>
-	</div>
-</body>
+    </div>
+  </body>
 </html>
+<?php
+db_close($dblink);
+ }?>

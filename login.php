@@ -1,42 +1,72 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<?php 
-require('db_port.php');
-$dblink=db_init();
+<?php
 session_start();
+if(!isset($_SESSION['_ybot_uid'])): 
 ?>
+<!DOCTYPE html>
 <html>
-<head>
-	<title>login</title>
-	<link rel="stylesheet" href="style.css" type="text/css" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-	<div class='banner' align='center'><img src="http://i.imgur.com/xQgmj.png" width="500" height="200" alt="歡迎來到登入頁面" /></div>
-	<div class='content' align='center'>
-		<form name="logconfirm" action=""  method="post">
-			name:<input type="text" name="name"><br />
-			pass: <input type="password" name="passw"><br />
-			<input type="submit" value="登入">
-		</form>
-	<?php //form check
-	if (isset($_POST["name"])){
-		$name=$_POST["name"];
-		if(!$result=get_user_data($dblink, $name))
-			echo "login failed!!<br />the user doesn't exist!!";
-		elseif(sha1($_POST['passw'])!=$result['password'])
-			echo "login failed!!<br />wrong password";
-		else{
-			db_close($dblink);
-			session_regenerate_id(true);
-			$_SESSION["_ybot_uid"] = $result['uid'];
-			$_SESSION["_ybot_name"] = $result['account'];
-			$_SESSION["_ybot_type"] = $result['type'];
-			echo "welcome back, ",$result['account'],"<br /><br />redirecting....";
-			header("Refresh:1;url=index.php");
-			}
-		}
-	
-	?>
-	</div>
-</body>
+  <head>
+    <title>ybot - login</title>
+    <link rel='stylesheet' href='style.css' type='text/css'>
+    <style type='text/css'>
+     <!--
+      input[type='text'],input[type='password'] {
+	width: 100%;
+	margin-left: auto;
+	display:block;
+	margin-bottom: 10px;
+	border: 1px solid #999;
+	border-radius: 3px;
+      }
+      
+      input[type='submit']{
+	display: block;
+	margin: 0.8em auto 0;
+      }
+      
+      /* Login Window */
+      .login {
+	background: #FFF;
+	opacity: 0.7;
+	border-radius: 5px;
+	display: block;
+	margin: 2em auto;
+	padding: 2em 2.5em;
+	max-width: 250px;
+	text-align: left;
+	vertical-align: middle;
+	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+	-moz-transition: opacity 0.3s;
+	-webkit-transition: opacity 0.3s;
+	-o-transition: opacity 0.3s;
+      }
+      
+      .login:hover{
+	opacity: 1;
+      }
+     -->
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+
+    <div class='header'>ybot</div>
+    <div class='subtitle'>The Control Panel of a Little Plurk Bot!</div>
+<?php if(isset($_GET['error'])): ?>
+    <!-- Show Notice Message If Login Failed -->
+    <div class='notice-red'> Login Failed.</div>
+<?php endif ?>
+    
+    <!-- Login -->
+    <div class='login'>
+      <form action='auth.php' method="POST">
+	ID <input type='text' name='account' />
+	Password <input type='password' name='password' />
+	<input type='submit' value='Login'>
+      </form>
+    </div>
+    </div>
+  </body>
 </html>
+<?php else: 
+  header('Location: responseedit.php');
+endif; ?>
