@@ -119,14 +119,14 @@ else{
 		?>
 		<div style='font-size: 90%; text-align: center;'>a:can control robot and edit keywords and responses, b:can only edit keywords and responses</div>
 		<div class='add'>
-		<h3>Add new user</h3>
+		<h3>Create new user</h3>
 		<form action='' method='post'><input type='hidden' name='account_create'>
 			Account name<input type='text' name='name'><br />
 			Password<input type='password' name='pass'><br />
 			Confirm password<input type='password' name='repass'><br />
 			<div style='text-align: center'>Type
 			<input type="radio" name="auth" value="a" />A<input type="radio" name="auth" value="b" CHECKED/>B</div>
-			<br /><input type='submit' value='add new user'>
+			<br /><input type='submit' value='Create'>
 		</form>
 		</div>
 		<?php //add manager 
