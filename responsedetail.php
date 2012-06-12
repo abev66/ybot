@@ -61,7 +61,7 @@ if (isset($_POST['delres'])){
 		}
 		?>
 		</div>
-		<a href='javascript:history.back()'>Back</a>
+		<a href='javascript:history.back()' class='back-btn'><img src='images/back.png'> Back</a>
 
   </body>
 </html>

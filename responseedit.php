@@ -100,6 +100,7 @@ if (isset($_GET['searchw'])){
 				}
 		?>
 		</table>
+		<div style='text-align: center'><a class='top-btn' href='#top'><img src='images/top.png' />Top</a></div>
 	  </div>
     </div>
   </body>

@@ -72,7 +72,7 @@ if (isset($_POST['delkey'])){
 		}
 		?>
 		</table>
-		<a href='javascript:history.back()'>Back</a>
+		<a href='javascript:history.back()' class='back-btn'><img src='images/back.png'> Back</a>
 	  </div>
   </body>
 </html>

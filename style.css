@@ -332,3 +332,12 @@ span:hover {
 .unlink-btn:hover {
   background-color: #58B4FF;
 }
+
+.back-btn, .top-btn {
+  height: 32px;
+}
+
+.back-btn img, .top-btn img{
+  display: inline-block;
+  vertical-align: middle;
+}

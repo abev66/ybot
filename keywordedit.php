@@ -91,6 +91,7 @@ $dblink = db_init();
 				}
 		?>
 	  </div>
+	  <div style='text-align: center'><a class='top-btn' href='#top'><img src='images/top.png' />Top</a></div>
     </div>
   </body>
 </html>
