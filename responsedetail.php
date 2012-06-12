@@ -7,6 +7,16 @@ else{
 require('db_port.php');
 $dblink = db_init();
 
+if (isset($_POST['delkey'])){
+	$key=$_POST['delkey'];
+	if(!remove_relation($dblink, $_GET['response'],$key))
+echo "<script type='text/javascript'>alert('delete keyword ".$key." sucess!');</script>";
+	}
+if (isset($_POST['delres'])){
+	if (!remove_sentence($dblink, $_GET['response'])){
+		header("location: responseedit.php");
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,20 +52,8 @@ $dblink = db_init();
 		$result=list_relation_response($dblink, $_GET['response']);
 		foreach ($result as $i){
 		echo "<span>".$i['keyword'];
-		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input type='submit' value='Delete'></form></span>";
+		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input class='unlink-btn' type='submit' title='Unlink' value='Unlink'></form></span>";
 		}
-		?>
-		<?php
-		if (isset($_POST['delkey'])){
-			$key=$_POST['delkey'];
-			if(!remove_relation($dblink, $_GET['response'],$key))
-                echo "<script type='text/javascript'>alert('delete keyword ".$key." sucess!');</script>";
-			}
-		if (isset($_POST['delres'])){
-			if (!remove_sentence($dblink, $_GET['response'])){
-				header("location: responseedit.php");
-				}
-			}
 		?>
 		</div>
 		<a href='javascript:history.back()'>Back</a>
