@@ -13,6 +13,7 @@ include('command_flags.inc');
 <html>
   <head>
     <title>ybot - Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel='stylesheet' href='style.css' type='text/css'>
     <style type='text/css'>
      <!--
