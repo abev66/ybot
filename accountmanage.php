@@ -69,6 +69,18 @@ else{
 			<input id='search-btn' type='submit' value='search'>
 		</form>
 		<h3>Account List</h3>
+<?php
+  if(isset($_GET['searchw']) && !empty($_GET['searchw'])) {
+    $result=get_user_data($dblink);
+    $tmp=array();
+    foreach($result as $i)
+	    if (strpos($i['account'], trim($_GET['searchw'])) !== false){
+		    $tmp[]=$i;
+	    }
+    $result=$tmp;
+    echo "<div class='notice-green'>Search result of ".$_GET['searchw']." . <a href='accountmanage.php'>Display All</a></div>";
+  }
+?>
 		<table><th>Account</th><th>Type</th><th colspan='2'>Action</th>
 		<?php //view all manager
 			if(!isset($_GET['searchw'])){
@@ -83,15 +95,6 @@ else{
 					}
 				}
 			if(isset($_GET['searchw'])){
-				$result=get_user_data($dblink);
-				if (!empty($_GET['searchw'])){
-					$tmp=array();
-					foreach($result as $i)
-						if (strpos($i['account'], trim($_GET['searchw'])) !== false){
-							$tmp[]=$i;
-						}
-					$result=$tmp;
-					}
 				foreach($result as $record){
 					if ($record['uid']==1)
 						continue;
