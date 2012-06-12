@@ -70,7 +70,7 @@ $dblink = db_init();
 				create_relation($dblink,$reply,$keyword);
 				}
 			else
-				echo "<script type='text/javascript'>alert('you must fill all the blanks!');</script>";
+				echo "<script type='text/javascript'>alert('You must fill all fields!');</script>";
 			}
 	?>
 	  </div>
