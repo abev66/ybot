@@ -34,6 +34,12 @@ if (isset($_POST['delkey'])){
       tr td:first-child {
 	text-align: center;
       }
+      h1 {
+	text-align: left;
+      }
+      form {
+	text-align: center;
+      }
       -->
     </style>
   </head>
@@ -61,7 +67,7 @@ if (isset($_POST['delkey'])){
 		<?php
 		$result=list_relation_keyword($dblink, $_GET['keyword']);
 		foreach ($result as $i){
-		echo "<tr><td>".$i['qualifier']."</td><td>".$i['response']."</td>";
+		echo "<tr><td>".$i['qualifier']."</td><td><a href='responsedetail.php?response=".urlencode($i['response'])."'>".$i['response']."</a></td>";
 		echo "<td><form action='' method='POST'><input type='hidden' name='delres' value='".$i['response']."'><input class='unlink-btn' type='submit' title='Unlink' value='Unlink'></form></td></tr>";
 		}
 		?>

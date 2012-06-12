@@ -31,7 +31,12 @@ if (isset($_POST['delres'])){
 	width: 90%;
 	margin: 1em auto;
       }
-      -->
+      h1 {
+	text-align: left;
+      }
+      form {
+	text-align: center;
+      }      -->
     </style>
     </head>
   <body>
@@ -51,7 +56,7 @@ if (isset($_POST['delres'])){
 		<?php
 		$result=list_relation_response($dblink, $_GET['response']);
 		foreach ($result as $i){
-		echo "<span>".$i['keyword'];
+		echo "<span><a href='keyworddetail.php?keyword=".urlencode($i['keyword'])."'>".$i['keyword'].'</a>';
 		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input class='unlink-btn' type='submit' title='Unlink' value='Unlink'></form></span>";
 		}
 		?>

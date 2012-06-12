@@ -18,7 +18,6 @@ $dblink = db_init();
 	width: 90%;
 	margin: 0 auto;
       }
-      
       -->
     </style>
   </head>

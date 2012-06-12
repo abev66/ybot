@@ -82,6 +82,7 @@ if (isset($_GET['searchw'])){
   echo "<div class='notice-green'> $count result(s) of $key. <a href='responseedit.php'>Display all</a></div>";
 }
 ?>
+		<h1>Responses</h1>
 		<table>
 		<tr>
 			<th>Qualifier</th>
