@@ -15,6 +15,11 @@ if (isset($_POST['delkey'])){
 	remove_keywords($dblink, $_GET['keyword']);
 	header('Location: keywordedit.php');
 	}
+
+if (isset($_POST['newres'])){
+  add_sentence($dblink, $_POST['qualifier'], trim($_POST['reply']));
+  create_relation($dblink, trim($_POST['reply']), array(trim($_GET['keyword'])));
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,6 +74,38 @@ if (isset($_POST['delkey'])){
 		echo "<td><form action='' method='POST'><input type='hidden' name='delres' value='".$i['response']."'><input class='unlink-btn' type='button' title='Unlink' value='Unlink' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();'></form></td></tr>";
 		}
 		?>
+		  <tr>
+		    <form action='' method='POST'>
+		      <td>
+			<select name="qualifier">
+			  <option value=":">:(自由發揮)</option>
+			  <option value="says" selected="selected">說</option>
+			  <option value="likes" >喜歡</option>
+			  <option value="shares" >分享</option>
+			  <option value="gives" >給</option>
+			  <option value="hates" >討厭</option>
+			  <option value="wants" >想要</option>
+			  <option value="has" >已經</option>
+			  <option value="will" >打算</option>
+			  <option value="asks" >問</option>
+			  <option value="wishs" >期待</option>
+			  <option value="was" >曾經</option>
+			  <option value="feels" >覺得</option>
+			  <option value="thinks" >想</option>
+			  <option value="is" >正在</option>
+			  <option value="hopes" >希望</option>
+			  <option value="needs" >需要</option>
+			  <option value="wonders" >好奇</option>
+			</select>	
+		      </td>
+		      <td>
+			<input type='text' name='reply' maxlength='140' />
+		      </td>
+		      <td>
+			<input type='submit' name='newres' value='+' class='newkey-btn' />
+		      </td>
+		    </tr>
+		  </tr>
 		</table>
 		<a href='javascript:history.back()' class='back-btn'><img src='images/back.png'> Back</a>
 	  </div>
