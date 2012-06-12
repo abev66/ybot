@@ -1,21 +1,19 @@
 ﻿<?php 
 session_start(); 
-if(!isset($_SESSION['_ybot_uid']))
+if(!isset($_SESSION['_ybot_uid'])):
   header('Location: login.php');
-else{
+else:
 
 require('db_port.php');
 $dblink = db_init();
 
 if (isset($_POST['delres'])){
 	$key=$_POST['delres'];
-	if(!remove_relation($dblink, $key, $_GET['keyword']))
-echo "<script type='text/javascript'>alert('delete response ".$key." sucess!');</script>";
+	remove_relation($dblink, $key, $_GET['keyword']);
 	}
 if (isset($_POST['delkey'])){
-	if (!remove_keywords($dblink, $_GET['keyword'])){
-		header("location: keywordedit.php");
-		}
+	remove_keywords($dblink, $_GET['keyword']);
+	header('Location: keywordedit.php');
 	}
 ?>
 <!DOCTYPE html>
@@ -68,7 +66,7 @@ if (isset($_POST['delkey'])){
 		$result=list_relation_keyword($dblink, $_GET['keyword']);
 		foreach ($result as $i){
 		echo "<tr><td>".$i['qualifier']."</td><td><a href='responsedetail.php?response=".urlencode($i['response'])."'>".$i['response']."</a></td>";
-		echo "<td><form action='' method='POST'><input type='hidden' name='delres' value='".$i['response']."'><input class='unlink-btn' type='submit' title='Unlink' value='Unlink'></form></td></tr>";
+		echo "<td><form action='' method='POST'><input type='hidden' name='delres' value='".$i['response']."'><input class='unlink-btn' type='button' title='Unlink' value='Unlink' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();'></form></td></tr>";
 		}
 		?>
 		</table>
@@ -76,4 +74,4 @@ if (isset($_POST['delkey'])){
 	  </div>
   </body>
 </html>
-<?php } ?>
+<?php endif; ?>

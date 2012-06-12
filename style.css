@@ -51,6 +51,10 @@ h3 {
   font-weight: normal;
 }
 
+img {
+  border: 0;
+}
+
 a {
   color: #335;
   text-decoration: none;

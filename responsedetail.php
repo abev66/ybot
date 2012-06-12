@@ -9,13 +9,11 @@ $dblink = db_init();
 
 if (isset($_POST['delkey'])){
 	$key=$_POST['delkey'];
-	if(!remove_relation($dblink, $_GET['response'],$key))
-echo "<script type='text/javascript'>alert('delete keyword ".$key." sucess!');</script>";
+	remove_relation($dblink, $_GET['response'],$key);
 	}
 if (isset($_POST['delres'])){
-	if (!remove_sentence($dblink, $_GET['response'])){
-		header("location: responseedit.php");
-		}
+	remove_sentence($dblink, $_GET['response']);
+	header('Location: responseedit.php');
 	}
 ?>
 <!DOCTYPE html>
@@ -57,7 +55,7 @@ if (isset($_POST['delres'])){
 		$result=list_relation_response($dblink, $_GET['response']);
 		foreach ($result as $i){
 		echo "<span><a href='keyworddetail.php?keyword=".urlencode($i['keyword'])."'>".$i['keyword'].'</a>';
-		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input class='unlink-btn' type='submit' title='Unlink' value='Unlink'></form></span>";
+		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input class='unlink-btn' type='button' title='Unlink' value='Unlink' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();'></form></span>";
 		}
 		?>
 		</div>
