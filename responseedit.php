@@ -11,7 +11,13 @@ $dblink = db_init();
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>ybot - Responedit</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
-
+    <style type='text/css'>
+      <!--
+      tr td:first-child {
+	text-align: center;
+      }
+      -->
+    </style>
   </head>
   <body>
     <div class='container'>

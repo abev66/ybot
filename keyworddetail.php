@@ -21,8 +21,12 @@ $dblink = db_init();
 	width: 90%;
 	margin: 1em auto;
       }
+      tr td:first-child {
+	text-align: center;
+      }
       -->
-    </style>  </head>
+    </style>
+  </head>
   <body>
     <div class='container'>
 
