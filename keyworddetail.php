@@ -43,6 +43,10 @@ if (isset($_POST['newres'])){
       form {
 	text-align: center;
       }
+      #newres {
+	display: block;
+	margin: 0 auto;
+      }
       -->
     </style>
   </head>
@@ -102,7 +106,7 @@ if (isset($_POST['newres'])){
 			<input type='text' name='reply' maxlength='140' />
 		      </td>
 		      <td>
-			<input type='submit' name='newres' value='+' class='newkey-btn' />
+			<input type='submit' name='newres' value='+' id='newres' class='newkey-btn' />
 		      </td>
 		    </tr>
 		  </tr>
