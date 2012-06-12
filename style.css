@@ -333,7 +333,7 @@ span:hover {
   border: 1px solid #AAA;
   text-indent: -9999px;
 }
-.unlink-btn:hover {
+.unlink-btn:hover, .newkey-btn:hover {
   background-color: #58B4FF;
 }
 
@@ -344,4 +344,30 @@ span:hover {
 .back-btn img, .top-btn img{
   display: inline-block;
   vertical-align: middle;
+}
+
+.newkey{
+  padding: 5px;
+  margin: 0;
+  -moz-transition: all 0.5s ease-out 0.2s;
+  -webkit-transition: all 0.5s ease-out 0.2s;
+  -o-transition: all 0.5s ease-out 0.2s;
+}
+
+.newkey-input{
+  display: block;
+  margin: 2px auto;
+  width: 3.5em;
+  -moz-transition: all 0.5s ease-out 0.2s;
+  -webkit-transition: all 0.5s ease-out 0.2s;
+  -o-transition: all 0.5s ease-out 0.2s;
+}
+
+.newkey-btn {
+  width: 3em;
+  height: 22px;
+  background: transparent;
+  border-radius: 3px;
+  border: 1px solid #AAA;
+  margin: 2px auto;
 }

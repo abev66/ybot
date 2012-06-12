@@ -15,6 +15,11 @@ if (isset($_POST['delres'])){
 	remove_sentence($dblink, $_GET['response']);
 	header('Location: responseedit.php');
 	}
+	
+if(isset($_POST['newkey'])) {
+  add_keywords($dblink, trim($_POST['newkey']));
+  create_relation($dblink, $_GET['response'], array(trim($_POST['newkey'])));
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,6 +56,7 @@ if (isset($_POST['delres'])){
 	  </div>
 		<div class='keyword-box'>
 		  <div>Keywords</div>
+		<div style='display:block;'>
 		<?php
 		$result=list_relation_response($dblink, $_GET['response']);
 		foreach ($result as $i){
@@ -58,6 +64,13 @@ if (isset($_POST['delres'])){
 		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input class='unlink-btn' type='button' title='Unlink' value='Unlink' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();'></form></span>";
 		}
 		?>
+		<span class='newkey'>
+		  <form action='' method='POST'>
+		    <input type='text' name='newkey' class='newkey-input' onfocus='javascript: this.style.width="10em";' onblur='javascript: this.style.width="3.5em";' />
+		    <input type='submit' class='newkey-btn' value='+' title='Add new keyword' />
+		  </form>
+		</span>
+		</div>
 		</div>
 		<a href='javascript:history.back()' class='back-btn'><img src='images/back.png'> Back</a>
 

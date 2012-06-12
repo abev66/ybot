@@ -76,6 +76,7 @@ $dblink = db_init();
 	  </div>
 	  <div class='keyword-box'>
 	  <h1>Keywords</h1>
+	    <div style='display:block;'>
 		<?php
 		if (!isset($_GET['searchw'])){
 			$result=output_table_keyword($dblink);
@@ -90,6 +91,7 @@ $dblink = db_init();
 					echo "<span><a href='keyworddetail.php?keyword=".urlencode($i['keyword'])."'>".$i['keyword']."</a></span>";
 				}
 		?>
+	    </div>
 	  </div>
 	  <div style='text-align: center'><a class='top-btn' href='#top'><img src='images/top.png' />Top</a></div>
     </div>
