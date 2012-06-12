@@ -111,7 +111,7 @@ if (isset($_POST['newres']) && !empty($_POST['reply'])){
 		    </tr>
 		  </tr>
 		</table>
-		<a href='javascript:history.back()' class='back-btn'><img src='images/back.png'> Back</a>
+		<a href='keywordedit.php' class='back-btn'><img src='images/back.png'> Back</a>
 	  </div>
   </body>
 </html>

@@ -72,7 +72,7 @@ if(isset($_POST['newkey']) && !empty($_POST['newkey'])) {
 		</span>
 		</div>
 		</div>
-		<a href='javascript:history.back()' class='back-btn'><img src='images/back.png'> Back</a>
+		<a href='responseedit.php' class='back-btn'><img src='images/back.png'> Back</a>
 
   </body>
 </html>
