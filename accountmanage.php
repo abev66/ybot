@@ -90,7 +90,7 @@ else{
 						continue;
 					$record['type']=='a'? $record['type']='A' : $record['type']='B';
 					echo "<tr><td>".$record['account']."</td><td>".$record['type'],"</td>";
-					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='submit' value='Delete' title='Destroy this account!!'></form></td>";
+					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='button' value='Delete' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();' title='Destroy this account!!'></form></td>";
 					echo "<td><form action='' method='POST'><input type='hidden' name='update' value='".$record['account']."'><input type='hidden' name='updatet' value='".$record['type']."'><input type='submit' value='Switch' title='Switch Account Type'></form></td></tr>";
 					}
 				}
