@@ -103,7 +103,7 @@ if (isset($_POST['newres'])){
 			</select>	
 		      </td>
 		      <td>
-			<input type='text' name='reply' maxlength='140' />
+			<input type='text' name='reply' style='width: 95%; display: block; margin: auto' maxlength='140' />
 		      </td>
 		      <td>
 			<input type='submit' name='newres' value='+' id='newres' class='newkey-btn' />
