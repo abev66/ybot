@@ -83,7 +83,7 @@ else{
 ?>
 		<table><th>Account</th><th>Type</th><th colspan='2'>Action</th>
 		<?php //view all manager
-			if(!isset($_GET['searchw'])){
+			if(!isset($_GET['searchw']) || empty($_GET['searchw'])){
 				$result=get_user_data($dblink);
 				foreach($result as $record){
 					if ($record['uid']==1)
@@ -93,8 +93,7 @@ else{
 					echo "<td><form action='' method='POST'><input type='hidden' name='delete' value='".$record['account']."'><input type='button' value='Delete' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();' title='Destroy this account!!'></form></td>";
 					echo "<td><form action='' method='POST'><input type='hidden' name='update' value='".$record['account']."'><input type='hidden' name='updatet' value='".$record['type']."'><input type='submit' value='Switch' title='Switch Account Type'></form></td></tr>";
 					}
-				}
-			if(isset($_GET['searchw'])){
+			}else {
 				foreach($result as $record){
 					if ($record['uid']==1)
 						continue;
