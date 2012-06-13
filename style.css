@@ -284,7 +284,7 @@ span:hover {
 
 /* Add Box */
 .add-box {
-  max-height: 20px;
+  max-height: 1.3em;
   padding: 12px;
   margin: 1em auto;
   text-align: center;
@@ -303,7 +303,7 @@ span:hover {
 }
 
 .add-box:hover {
-  max-height: 500px;
+  max-height: 250em;
   opacity: 1;
 }
 
