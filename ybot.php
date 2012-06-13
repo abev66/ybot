@@ -279,8 +279,7 @@
 	      } else if ( ($config['CHECK_RESPONSES'] == 'true') && ($item->is_unread == 1)) {
 		  $responses = $plurk->get_responses($item->plurk_id);
 			  
-		  for ($i=0;$i<count($responses->responses);$i++) {
-		    $resItem = $responses->responses[$i];
+		  foreach( $responses->responses as $i=>$resItem){
 		    
 		    if(is_mention($resItem->content_raw, $config['PLURK_ACCOUNT']) && ($resItem->user_id != 	$uid) ) {
 		      $do_reply = true;
@@ -312,23 +311,15 @@
 	    }
 	    
 	    // Record finish plurks
-	    $read_plurks[] = $item->plurk_id ;
+	    if($config['MUTE_AFTER_RESPONSE'] == 'true')
+	      $plurk->mute_plurks($item->plurk_id);
+	    else
+	      $plurk->mark_plurk_as_read($item->plurk_id);
 	  } else
 	  // Mute plurks which cannot add responses.
-	    $mute_plurks[] = $item->plurk_id;
+	    $plurk->mute_plurks($item->plurk_id);
 	}
 
-	// Mark as Read or Mute 
-	if($config['MUTE_AFTER_RESPONSE'] == 'true') {
-	  $read_plurks = array_merge($mute_plurks, $read_plurks);
-	  $plurk->mute_plurks($read_plurks);
-	}
-	else if( empty($mute_plurks) )
-	  $plurk->mark_plurk_as_read($read_plurks);
-	else {
-	  $plurk->mark_plurk_as_read($read_plurks);
-	  $plurk->mute_plurks($mute_plurks);
-	}
 	// empty after finish
 	$read_plurks = array();
 	$mute_plurks = array();
