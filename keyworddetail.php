@@ -16,9 +16,12 @@ if (isset($_POST['delkey'])){
 	header('Location: keywordedit.php');
 	}
 
-if (isset($_POST['newres']) && !empty($_POST['reply'])){
-  add_sentence($dblink, $_POST['qualifier'], trim($_POST['reply']));
-  create_relation($dblink, trim($_POST['reply']), array(trim($_GET['keyword'])));
+if (isset($_POST['newres'])){
+  $reply = trim($_POST['reply']);
+  if(!empty($reply)) {
+    add_sentence($dblink, $_POST['qualifier'], trim($_POST['reply']));
+    create_relation($dblink, trim($_POST['reply']), array(trim($_GET['keyword'])));
+  }
 }
 ?>
 <!DOCTYPE html>

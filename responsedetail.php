@@ -15,10 +15,13 @@ if (isset($_POST['delres'])){
 	remove_sentence($dblink, $_GET['response']);
 	header('Location: responseedit.php');
 	}
-	
-if(isset($_POST['newkey']) && !empty($_POST['newkey'])) {
-  add_keywords($dblink, trim($_POST['newkey']));
-  create_relation($dblink, $_GET['response'], array(trim($_POST['newkey'])));
+
+if(isset($_POST['newkey'])) {
+  $newkey = trim($_POST['newkey']);
+  if($newkey){
+    add_keywords($dblink, trim($_POST['newkey']));
+    create_relation($dblink, $_GET['response'], array(trim($_POST['newkey'])));
+  }
 }
 ?>
 <!DOCTYPE html>
