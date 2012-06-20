@@ -5,7 +5,10 @@
 	<ul>
 	  <li><a href="responseedit.php">Responses</a></li>
 	  <li><a href="keywordedit.php">Keywords</a></li>
-	</ul>
+<?php if($_SESSION['_ybot_type'] == 'b'): ?>
+	  <li><a href="reloadtable.php">Reload Table</a></li>
+<?php endif; ?>
+      </ul>
       </li>
 <?php if($_SESSION['_ybot_type'] == 'a'): ?>
       <li><a href="dashboard.php">Dashboard</a></li>
