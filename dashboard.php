@@ -125,8 +125,20 @@ include('command_flags.inc');
 	  else if($bfr == FB_PAUSED)
 	    echo "<div class='notice-green'>Status: Pause</div>";
 	  else
-	    echo "<div class='notice-green'>Status: Unexpect response.</div>";
+	    echo "<div class='notice-red'>Status: Unexpect response.</div>";
 	  $botstatus = $bfr;
+	  
+	  $msg=json_encode(array( 'command' => CMD_VERSION ));
+	  $bytes_sent = socket_sendto($socket, $msg, strlen($msg), 0, 'sockets/ybot-socket' );
+	  
+	  if($bytes_sent){
+	    $bfr='';
+	    $bytes_received = @socket_recv($socket, $bfr, 65536, 0);
+	    
+	    if(!empty($bfr) && $bfr != FB_ERROR_INVALID_COMMAND && $bfr != FB_ERROR){
+	      $ver_info = json_decode($bfr);
+	    }
+	  }
   } else {
     echo "<div class='notice-red'>Couldn't connect to bot.</div>";
     $botstatus = 'dead';
@@ -213,6 +225,14 @@ include('command_flags.inc');
 	  <input type='submit' name='rt' value='Reload Table' />
 	  <input type='submit' name='rl' value='Relogin' />
 	</form>
+      <?php if(isset($ver_info)):?>
+	<table>
+	  <tr><th colspan='2'>Bot Info</th></tr>
+	<?php foreach( $ver_info as $key => $value):?>
+	  <tr><td><?php echo $key; ?></td><td><?php echo $value; ?></td></tr>
+	<?php endforeach;?>
+	</table>
+      <?php endif;?>
       </div>
       <div class='plurk_box'>
       <h3>Send a Plurk</h3>

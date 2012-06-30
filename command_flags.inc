@@ -7,6 +7,7 @@
   define('CMD_RELOAD_TABLE',5);
   define('CMD_GET_PAUSE_STATUS',7);
   define('CMD_RELOGIN',6);
+  define('CMD_VERSION',8);
   define('CMD_EXIT',225);
   
   define('FB_RUNNING', 'running');

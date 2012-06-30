@@ -22,8 +22,8 @@
 //---------- DEFINE ------------    
     // Information about this bot.
     define('APPNAME','ybot');
-    define('VERNUM','0.2.1');
-    define('SUBVERNUM','20120603');
+    define('VERNUM','0.2.5');
+    define('SUBVERNUM','20120630');
     define('OTHERMSG','DB-PHP-yaoming');
     define('SOCKET_ADDR','sockets/ybot-socket');
     
@@ -188,6 +188,17 @@
 	case CMD_EXIT:
 	  $control_vars['runbot'] = false;
 	  socket_sendto($socket_server_side, FB_OK, strlen(FB_OK), 0, $socket_client_side);
+	  break;
+	  
+	case CMD_VERSION:
+	  $ver_info = array(
+	    'NAME' => APPNAME,
+	    'VERNUM' => VERNUM,
+	    'SUBVERSION' => SUBVERNUM,
+	    'COMMENTS' => OTHERMSG
+	  );
+	  $content = json_encode($ver_info);
+	  socket_sendto($socket_server_side, $content, strlen($content), 0, $socket_client_side);
 	  break;
 	  
 	default:
