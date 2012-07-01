@@ -370,7 +370,7 @@
     $words = array("'",'"');
     
     foreach( $words as $item )
-      $ret = str_replace($item, ''.$item, $ret);
+      $ret = str_replace($item, '\\'.$item, $ret);
       
     return $ret;
   }
