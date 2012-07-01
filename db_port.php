@@ -94,12 +94,12 @@
   function output_table_keyword($db, $keyword=''){
     $ret=array();
 	if ($keyword == ''){
-		$result = mysqli_query($db, "SELECT * FROM ".TABLE_KEYWORDS.";");
+		$result = mysqli_query($db, "SELECT * FROM ".TABLE_KEYWORDS." ORDER BY keyword;");
 		while($record=mysqli_fetch_assoc($result))
 			$ret[]=$record;
 		}
 	else{
-		$result=mysqli_query($db, "SELECT b.keyword FROM ".TABLE_KEYWORDS." AS b WHERE b.keyword LIKE '%".command_escape($keyword)."%' ;");
+		$result=mysqli_query($db, "SELECT b.keyword FROM ".TABLE_KEYWORDS." AS b WHERE b.keyword LIKE '%".command_escape($keyword)."%' ORDER BY b.keyword;");
 		
 		while ($record=mysqli_fetch_assoc($result))
 			$ret[]=$record;
@@ -109,7 +109,7 @@
   
 // list keyword's all responses.
   function list_relation_keyword($db, $keyword){
-	$result=mysqli_query($db,"SELECT a.qualifier, a.response FROM ".TABLE_RESPONSES." as a, ".TABLE_KEYWORDS." as b, ".TABLE_RELATIONS." as c WHERE b.keyword = '".command_escape($keyword)."' AND a.rid=c.rid AND b.kid=c.kid ;");
+	$result=mysqli_query($db,"SELECT a.qualifier, a.response FROM ".TABLE_RESPONSES." as a, ".TABLE_KEYWORDS." as b, ".TABLE_RELATIONS." as c WHERE b.keyword = '".command_escape($keyword)."' AND a.rid=c.rid AND b.kid=c.kid ORDER BY a.response;");
 	while ($record=mysqli_fetch_assoc($result))
 		$ret[]=$record;	
     return $result ? $ret : mysqli_error($db);
@@ -157,12 +157,12 @@
   function output_table_response($db, $reply=''){
     $ret=array();
 	if ($reply == ''){
-		$result = mysqli_query($db, "SELECT * FROM ".TABLE_RESPONSES.";");
+		$result = mysqli_query($db, "SELECT * FROM ".TABLE_RESPONSES." ORDER BY response;");
 		while($record=mysqli_fetch_assoc($result))
 			$ret[]=$record;
 		}
 	else{
-		$result=mysqli_query($db,"SELECT a.qualifier,a.response FROM ".TABLE_RESPONSES." as a WHERE a.response LIKE '%".command_escape($reply)."%' ;");
+		$result=mysqli_query($db,"SELECT a.qualifier,a.response FROM ".TABLE_RESPONSES." as a WHERE a.response LIKE '%".command_escape($reply)."%' ORDER BY a.response;");
 		while ($record=mysqli_fetch_assoc($result))
 			$ret[]=$record;
 		}
@@ -171,7 +171,7 @@
 
 // list response's all keywords
   function list_relation_response($db, $response){
-	$result=mysqli_query($db,"SELECT b.keyword FROM ".TABLE_RESPONSES." as a, ".TABLE_KEYWORDS." as b, ".TABLE_RELATIONS." as c WHERE a.response = '".command_escape($response)."' AND a.rid=c.rid AND b.kid=c.kid ;");
+	$result=mysqli_query($db,"SELECT b.keyword FROM ".TABLE_RESPONSES." as a, ".TABLE_KEYWORDS." as b, ".TABLE_RELATIONS." as c WHERE a.response = '".command_escape($response)."' AND a.rid=c.rid AND b.kid=c.kid ORDER BY b.keyword;");
 	while ($record=mysqli_fetch_assoc($result))
 		$ret[]=$record;	
     return $result ? $ret : mysqli_error($db);
