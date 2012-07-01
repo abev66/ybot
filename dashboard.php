@@ -309,7 +309,7 @@ include('command_flags.inc');
 ?>
 	  </table>
 	  <input type='submit' name='update' value='Save' />
-	  <input type='button' value='Cancel' onclick='javascript: location.href="dashboard.php";' />
+	  <input type='reset' value='Cancel' />
 	</form>	
       </div>
     </div>
