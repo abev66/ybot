@@ -28,7 +28,7 @@ if (isset($_POST['newres'])){
 <html>
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ybot - <?php echo $_GET['keyword']?> detail</title>
+    <title>ybot - <?php echo htmlspecialchars($_GET['keyword'])?> detail</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
     <style type='text/css'>
       <!--
@@ -59,7 +59,7 @@ if (isset($_POST['newres'])){
 	<?php include('header.inc'); ?>
 	<?php include('navbar.inc'); ?>
 	  <div>
-		<h1>Keyword: <?php echo $_GET['keyword'];?>
+		<h1>Keyword: <?php echo htmlspecialchars($_GET['keyword']);?>
 	  	<form action='' method='POST' id='delete-form'>
 		  <input type='hidden' name='delkey' value='1' />
 		  <input id='delete-btn' type='button' title='Destroy this Keyword!' value='Delete this keyword' onclick='javascript:if(confirm("Are you sure?"))this.form.submit();'>

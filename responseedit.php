@@ -78,8 +78,9 @@ $dblink = db_init();
 if (isset($_GET['searchw'])){
   $key=trim($_GET['searchw']);
   $result=output_table_response($dblink, $key);
+  $key_dis = htmlspecialchars($key);
   $count = count($result);
-  echo "<div class='notice-green'> $count result(s) of $key. <a href='responseedit.php'>Display all</a></div>";
+  echo "<div class='notice-green'> $count result(s) of $key_dis. <a href='responseedit.php'>Display all</a></div>";
 }
 ?>
 		<h1>Responses</h1>
@@ -92,11 +93,11 @@ if (isset($_GET['searchw'])){
 		if (!isset($_GET['searchw'])){
 			$result=output_table_response($dblink);
 			foreach($result as $i)
-				echo "<tr><td>".$i['qualifier']."</td><td><a href='responsedetail.php?response=".urlencode($i['response'])."'>".$i['response']."</a></td></tr>";
+				echo "<tr><td>".$i['qualifier']."</td><td><a href='responsedetail.php?response=".urlencode($i['response'])."'>".htmlspecialchars($i['response'])."</a></td></tr>";
 			}
 		if (isset($_GET['searchw'])){
 				foreach($result as $i)
-					echo "<tr><td>".$i['qualifier']."</td><td><a href='responsedetail.php?response=".urlencode($i['response'])."'>".$i['response']."</a></td></tr>";
+					echo "<tr><td>".$i['qualifier']."</td><td><a href='responsedetail.php?response=".urlencode($i['response'])."'>".htmlspecialchars($i['response'])."</a></td></tr>";
 				}
 		?>
 		</table>

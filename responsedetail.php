@@ -28,7 +28,7 @@ if(isset($_POST['newkey'])) {
 <html>
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ybot - <?php echo $_GET['response']?>_detail</title>
+    <title>ybot - <?php echo htmlspecialchars($_GET['response'])?>_detail</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
     <style type='text/css'>
       <!--
@@ -50,7 +50,7 @@ if(isset($_POST['newkey'])) {
 	<?php include('header.inc'); ?>
 	<?php include('navbar.inc'); ?>
 	  <div>
-		<h1>Response: <?php echo $_GET['response'];?>
+		<h1>Response: <?php echo htmlspecialchars($_GET['response']);?>
 	  	<form action='' method='POST' id='delete-form'>
 		  <input type='hidden' name='delres' value='1' />
 		  <input id='delete-btn' type='button' title='Destroy this Response!' value='Delete this Response' onclick='javascript:if(confirm("Are you sure?"))this.form.submit();'>
@@ -63,8 +63,8 @@ if(isset($_POST['newkey'])) {
 		<?php
 		$result=list_relation_response($dblink, $_GET['response']);
 		foreach ($result as $i){
-		echo "<span><a href='keyworddetail.php?keyword=".urlencode($i['keyword'])."'>".$i['keyword'].'</a>';
-		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".$i['keyword']."'><input class='unlink-btn' type='button' title='Unlink' value='Unlink' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();'></form></span>";
+		echo "<span><a href='keyworddetail.php?keyword=".urlencode($i['keyword'])."'>".htmlspecialchars($i['keyword']).'</a>';
+		echo "<form action='' method='POST'><input type='hidden' name='delkey' value='".htmlspecialchars($i['keyword'])."'><input class='unlink-btn' type='button' title='Unlink' value='Unlink' onclick='javascript: if(confirm(\"Are you sure?\")) this.form.submit();'></form></span>";
 		}
 		?>
 		<span class='newkey'>
