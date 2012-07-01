@@ -246,6 +246,7 @@
   
   // Dump Response Table
   function dump_table($db){
+    $general = false;
     $result = mysqli_query($db,
 	"SELECT r.rid, r.qualifier, r.response, k.kid, k.keyword FROM ".TABLE_KEYWORDS." AS k, ".TABLE_RESPONSES." AS r,".TABLE_RELATIONS." AS l WHERE k.kid = l.kid AND r.rid = l.rid ORDER BY rid ;"
     );
@@ -265,7 +266,11 @@
 	
       while(($temp = mysqli_fetch_assoc($result)) != NULL){
 	if($prid['rid'] != $temp['rid']){
-	  $prid = array(
+	  if($general == true) {
+	    $ret[count($ret)-1]['keywords'][] = '*';
+	    $general = false;
+	  }
+	$prid = array(
 	    'rid' => $temp['rid'],
 	    'qualifier' => $temp['qualifier'],
 	    'response' => $temp['response'],
@@ -273,6 +278,8 @@
 	  );
 	  $ret[] = $prid;
 	}
+	else if(trim($temp['keyword']) == '*')
+	    $general = true;
 	else
 	  $ret[count($ret)-1]['keywords'][] = $temp['keyword'];
       }
