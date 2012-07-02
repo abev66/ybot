@@ -67,14 +67,14 @@
 	  $ret = $sentences_generic[ rand(0, $sentences_generic_length-1 ) ];
 
       } else if($sentences_matched_length < $sentences_generic_length) {
-	  $ret = (rand(0,1)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
+	  $ret = (rand(0,2)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
 	  
       } else if($sentences_matched_length >= $sentences_generic_length*2 ) {
 	  $temp = array_merge( $sentences_generic, $sentences_matched );
 	  $ret = $temp[ rand( 0, count($temp)-1 ) ];
 	  
       } else {
-	  $ret = (rand(0,2)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
+	  $ret = (rand(0,3)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
 	  
       }
       
