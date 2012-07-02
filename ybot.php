@@ -23,7 +23,7 @@
     // Information about this bot.
     define('APPNAME','ybot');
     define('VERNUM','0.2.5');
-    define('SUBVERNUM','20120630');
+    define('SUBVERNUM','20120702');
     define('OTHERMSG','DB-PHP-yaoming');
     define('SOCKET_ADDR','sockets/ybot-socket');
     
