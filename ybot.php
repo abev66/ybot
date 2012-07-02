@@ -323,12 +323,12 @@
 	    
 	    // Record finish plurks
 	    if($config['MUTE_AFTER_RESPONSE'] == 'true')
-	      $plurk->mute_plurks($item->plurk_id);
+	      $plurk->mute_plurks(array($item->plurk_id));
 	    else
-	      $plurk->mark_plurk_as_read($item->plurk_id);
+	      $plurk->mark_plurk_as_read(array($item->plurk_id));
 	  } else
 	  // Mute plurks which cannot add responses.
-	    $plurk->mute_plurks($item->plurk_id);
+	    $plurk->mute_plurks(array($item->plurk_id));
 	}
 
 	// empty after finish
