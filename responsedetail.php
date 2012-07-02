@@ -75,7 +75,7 @@ if(isset($_POST['newkey'])) {
 		</span>
 		</div>
 		</div>
-		<a href='responseedit.php' class='back-btn'><img src='images/back.png'> Back</a>
+		<a href='responseedit.php' class='back-btn'><img src='images/back.png'> Back to responses list</a>
 
   </body>
 </html>

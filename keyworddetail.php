@@ -114,7 +114,7 @@ if (isset($_POST['newres'])){
 		    </tr>
 		  </tr>
 		</table>
-		<a href='keywordedit.php' class='back-btn'><img src='images/back.png'> Back</a>
+		<a href='keywordedit.php' class='back-btn'><img src='images/back.png'> Back to keywords list</a>
 	  </div>
   </body>
 </html>
