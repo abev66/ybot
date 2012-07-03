@@ -239,24 +239,24 @@ include('command_flags.inc');
 	<form action='' method='POST'>
 	  <p>
 	    <select name='qualifier'>
-	      <option value=":">:</option>
-	      <option value='says' selected='selected'>says</option>
-	      <option value='likes' >likes</option>
-	      <option value='shares' >shares</option>
-	      <option value='gives' >gives</option>
-	      <option value='hates' >hates</option>
-	      <option value='wants' >wants</option>
-	      <option value='has' >has</option>
-	      <option value='will' >will</option>
-	      <option value='asks' >asks</option>
-	      <option value='wishs' >wishs</option>
-	      <option value='was' >was</option>
-	      <option value='feels' >feels</option>
-	      <option value='thinks' >thinks</option>
-	      <option value='is' >is</option>
-	      <option value='hopes' >hopes</option>
-	      <option value='needs' >needs</option>
-	      <option value='wonders' >wonders</option>
+	      <option value=":">:(自由發揮)</option>
+	      <option value='says' selected='selected'>說</option>
+	      <option value='likes' >喜歡</option>
+	      <option value='shares' >分享</option>
+	      <option value='gives' >給</option>
+	      <option value='hates' >討厭</option>
+	      <option value='wants' >想要</option>
+	      <option value='has' >已經</option>
+	      <option value='will' >打算</option>
+	      <option value='asks' >問</option>
+	      <option value='wishs' >期待</option>
+	      <option value='was' >曾經</option>
+	      <option value='feels' >覺得</option>
+	      <option value='thinks' >想</option>
+	      <option value='is' >正在</option>
+	      <option value='hopes' >希望</option>
+	      <option value='needs' >需要</option>
+	      <option value='wonders' >好奇</option>
 	    </select>
 	    <input type='text' name='plurk' maxlength='140' size='35' />
 	    <div style="text-align: right;"><input type='checkbox' name='no_comments' value='1' />No comments</div>
