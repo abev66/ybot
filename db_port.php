@@ -1,21 +1,7 @@
 <?php
 // db_port.php - Database port for ybot using MySQL.
-  
-  // Default login info.
-  define('HOST','140.127.233.220:3306');
-  define('USER','yaoming');
-  define('PASSWORD','yaoming');
-  define('DBNAME','plurkbot');
-  
-  // Configures
-  define('LOG_FILE', '');
-  
-  // table names
-  define('TABLE_KEYWORDS','keywords');
-  define('TABLE_RESPONSES','responses');
-  define('TABLE_ADMIN', 'administers');
-  define('TABLE_RELATIONS', 'relations');
-  define('TABLE_SETTINGS', 'settings');
+
+  require('db_port_config.inc');
   
 //--------------- functions ---------------
 
