@@ -69,7 +69,7 @@ if(isset($_POST['newkey'])) {
 		?>
 		<span class='newkey'>
 		  <form action='' method='POST'>
-		    <input type='text' name='newkey' class='newkey-input' onfocus='javascript: this.style.width="10em";' onblur='javascript: this.style.width="3.5em";' />
+		    <input type='text' name='newkey' class='newkey-input' />
 		    <input type='submit' class='newkey-btn' value='+' title='Add new keyword' />
 		  </form>
 		</span>
