@@ -30,6 +30,10 @@
     // load php-plurk-api and database port.
     require('plurk_api.php');
     require('db_port.php');
+    
+    // hash file ver
+    $db_port_hash = md5_file('db_port.php');
+    $this_hash = md5_file($_SERVER['SCRIPT_NAME']);
 
     // include flags
     include('command_flags.inc');
@@ -191,11 +195,14 @@
 	  break;
 	  
 	case CMD_VERSION:
+	  global $this_hash, $db_port_hash;
 	  $ver_info = array(
 	    'NAME' => APPNAME,
 	    'VERNUM' => VERNUM,
 	    'SUBVERSION' => SUBVERNUM,
-	    'COMMENTS' => OTHERMSG
+	    'COMMENTS' => OTHERMSG,
+	    'HASH VER' => substr($this_hash, 0, 9) ,
+	    'DBPORT VER' => substr($db_port_hash, 0, 9)
 	  );
 	  $content = json_encode($ver_info);
 	  socket_sendto($socket_server_side, $content, strlen($content), 0, $socket_client_side);
