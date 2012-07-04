@@ -86,7 +86,7 @@ $dblink = db_init();
 		if (isset($_GET['searchw'])){
 				$key=trim($_GET['searchw']);
 				$key_dis = htmlspecialchars($key);
-				$result=output_table_keyword($dblink, $key);
+				$result=output_table_keyword($dblink, $key, true);
 				$count = count($result);
 				echo "<div class='notice-green'> $count result(s) of $key_dis. <a href='keywordedit.php'>Display all</a></div>";				foreach($result as $i)
 					echo "<span><a href='keyworddetail.php?keyword=".urlencode($i['keyword'])."'>".htmlspecialchars($i['keyword'])."</a></span>";

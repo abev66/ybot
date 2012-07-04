@@ -74,7 +74,7 @@ else{
     $result=get_user_data($dblink);
     $tmp=array();
     foreach($result as $i)
-	    if (strpos($i['account'], trim($_GET['searchw'])) !== false){
+	    if (strpos(strtoupper($i['account']), strtoupper(trim($_GET['searchw']))) !== false){
 		    $tmp[]=$i;
 	    }
     $result=$tmp;

@@ -77,7 +77,7 @@
 }
 
   // Query table using keyword, empty for return all keywords.
-  function output_table_keyword($db, $keyword=''){
+  function output_table_keyword($db, $keyword='', $ignore_casing = false){
     $ret=array();
 	if ($keyword == ''){
 		$result = mysqli_query($db, "SELECT * FROM ".TABLE_KEYWORDS." ORDER BY keyword;");
@@ -85,7 +85,10 @@
 			$ret[]=$record;
 		}
 	else{
-		$result=mysqli_query($db, "SELECT b.keyword FROM ".TABLE_KEYWORDS." AS b WHERE b.keyword LIKE '%".command_escape($keyword)."%' ORDER BY b.keyword;");
+		$sql_command = $ignore_casing ? 
+		  "SELECT b.keyword FROM ".TABLE_KEYWORDS." AS b WHERE UPPER(b.keyword) LIKE UPPER('%".command_escape($keyword)."%') ORDER BY b.keyword;" :
+		  "SELECT b.keyword FROM ".TABLE_KEYWORDS." AS b WHERE b.keyword LIKE '%".command_escape($keyword)."%' ORDER BY b.keyword;" ;
+		$result=mysqli_query($db, $sql_command);
 		
 		while ($record=mysqli_fetch_assoc($result))
 			$ret[]=$record;
@@ -140,7 +143,7 @@
   }
 
   // Query table using response, empty for return all responses.
-  function output_table_response($db, $reply=''){
+  function output_table_response($db, $reply='', $ignore_casing = false){
     $ret=array();
 	if ($reply == ''){
 		$result = mysqli_query($db, "SELECT * FROM ".TABLE_RESPONSES." ORDER BY response;");
@@ -148,7 +151,10 @@
 			$ret[]=$record;
 		}
 	else{
-		$result=mysqli_query($db,"SELECT a.qualifier,a.response FROM ".TABLE_RESPONSES." as a WHERE a.response LIKE '%".command_escape($reply)."%' ORDER BY a.response;");
+		$sql_command = $ignore_casing ?
+		  "SELECT a.qualifier,a.response FROM ".TABLE_RESPONSES." as a WHERE UPPER(a.response) LIKE UPPER('%".command_escape($reply)."%') ORDER BY a.response;" :
+		  "SELECT a.qualifier,a.response FROM ".TABLE_RESPONSES." as a WHERE a.response LIKE '%".command_escape($reply)."%' ORDER BY a.response;" ;
+		$result=mysqli_query($db, $sql_command);
 		while ($record=mysqli_fetch_assoc($result))
 			$ret[]=$record;
 		}

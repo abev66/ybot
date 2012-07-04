@@ -77,7 +77,7 @@ $dblink = db_init();
 <?php
 if (isset($_GET['searchw'])){
   $key=trim($_GET['searchw']);
-  $result=output_table_response($dblink, $key);
+  $result=output_table_response($dblink, $key, true);
   $key_dis = htmlspecialchars($key);
   $count = count($result);
   echo "<div class='notice-green'> $count result(s) of $key_dis. <a href='responseedit.php'>Display all</a></div>";
