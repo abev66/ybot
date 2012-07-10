@@ -22,8 +22,8 @@
 //---------- DEFINE ------------    
     // Information about this bot.
     define('APPNAME','ybot');
-    define('VERNUM','0.2.5');
-    define('SUBVERNUM','20120702');
+    define('VERNUM','0.2.6');
+    define('SUBVERNUM','20120704');
     define('OTHERMSG','DB-PHP-yaoming');
     define('SOCKET_ADDR','sockets/ybot-socket');
     
@@ -89,6 +89,24 @@
       if(strpos($message, "@$myname")!==false)
 	return true;
       return false;
+    }
+    
+    function is_friend ( $did , $flist ){
+      foreach( $flist as $item )
+	if($item->uid == $did)
+	  return true;
+      return false;
+    }
+    
+    function get_friends( $plurk, $uid ){
+      $offset = 0;
+      $ret = array();
+      do {
+	$temp = $plurk->get_friends($uid, $offset);
+	$ret = array_merge($ret, $temp);
+	$offset +=10;
+      } while(count($temp) >= 10);
+      return $ret;
     }
     
     function replied ( $response_count , $pid, $uid ) {
@@ -268,8 +286,9 @@
       }
 
       if( ($loop_count%$config['CHECK_INTERVAL'])==0 && !$control_vars['pause']) {
-	//  Get Plurks
+	//  Get Plurks and friends list
 	$pu = $plurk->get_plurks(date('c'), 30);
+	$friend_list = get_friends($plurk, $uid);
 	
 	//  Apply all friend requests
 	if( ($config['AUTO_ACCEPT_FRIENDS']=='true'))
@@ -283,7 +302,7 @@
 	  $do_reply = false;
 	  
 	  // Only Check if the plurk can add response.
-	  if($item->no_comments != 1) {
+	  if($item->no_comments != 1 && (is_friend($item->owner_id, $friend_list) || ($config['SKIP_REPLURKS'] == 'false'))) {
 	      if ( ( !replied($item->response_count, $item->plurk_id, $uid)) && ( (is_mention($item->content_raw, $config['PLURK_ACCOUNT']) || $config['RESPONSE_MODE'] == 'ANYWAY') && ($config['RESPONSE_MODE'] != 'DISABLED') ) && ($item->owner_id != $uid) ) {
 		  $do_reply = true; 
 		  
