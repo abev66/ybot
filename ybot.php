@@ -22,8 +22,8 @@
 //---------- DEFINE ------------    
     // Information about this bot.
     define('APPNAME','ybot');
-    define('VERNUM','0.2.6');
-    define('SUBVERNUM','20120704');
+    define('VERNUM','0.2.7');
+    define('SUBVERNUM','20121001');
     define('OTHERMSG','DB-PHP-yaoming');
     define('SOCKET_ADDR','sockets/ybot-socket');
     
@@ -100,12 +100,21 @@
     
     function get_friends( $plurk, $uid ){
       $offset = 0;
+      static $ret = array();
+      static $last_friendcount = 0;
+      $friendcount = $plurk->get_own_profile()->friends_count;
+      
+      if($last_friendcount == $friendcount)
+	return $ret;
+
       $ret = array();
+      $last_friendcount = $friendcount;
+
       do {
 	$temp = $plurk->get_friends($uid, $offset);
 	$ret = array_merge($ret, $temp);
 	$offset +=10;
-      } while(count($temp) >= 10);
+      } while(count($ret) <= $friendcount && !empty($temp) );
       return $ret;
     }
     
