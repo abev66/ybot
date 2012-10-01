@@ -24,7 +24,7 @@ if(!isset($_SESSION['_ybot_uid'])):
   header('Location: login.php');
 else:
   require('db_port.php');
-  $db_port = db_init();
+  $db_port = db_init($_SESSION[_ybot_uid]);
   include('command_flags.inc');
   $socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);
   $randomd=(string)rand();

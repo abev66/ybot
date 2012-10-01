@@ -34,4 +34,5 @@
   define('TABLE_ADMIN', 'administers');
   define('TABLE_RELATIONS', 'relations');
   define('TABLE_SETTINGS', 'settings');
+  define('TABLE_DBLOG', 'db_log');
 ?>

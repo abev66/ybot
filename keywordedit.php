@@ -24,7 +24,7 @@ session_start();
 if(!isset($_SESSION['_ybot_uid']))
   header('Location: login.php');
 require('db_port.php');
-$dblink = db_init();
+$dblink = db_init($_SESSION[_ybot_uid]);
 ?>
 <!DOCTYPE html>
 <html>

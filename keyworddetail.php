@@ -26,7 +26,7 @@ if(!isset($_SESSION['_ybot_uid'])):
 else:
 
 require('db_port.php');
-$dblink = db_init();
+$dblink = db_init($_SESSION[_ybot_uid]);
 
 if (isset($_POST['delres'])){
 	$key=$_POST['delres'];

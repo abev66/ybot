@@ -246,7 +246,7 @@
 //---------- Main ------------
 
     //  Initialize Data Source
-    $data_source = db_init();
+    $data_source = db_init('ybot');
 
     //  Read configure
     $config = dump_settings($data_source);

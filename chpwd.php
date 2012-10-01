@@ -79,7 +79,7 @@ else:
 <?php 
   if(isset($_POST['upd'])){
       require('db_port.php');
-      $dblink=db_init();
+      $dblink=db_init($_SESSION[_ybot_uid]);
       $pass=$_POST['new'];
       $repass=$_POST['con'];
       $oldpassword=sha1($_POST['cur']);

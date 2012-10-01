@@ -26,7 +26,7 @@ if($_SESSION['_ybot_uid']!=1 || !isset($_SESSION['_ybot_uid'])){
 }
 else{
 	require('db_port.php');
-	$dblink = db_init();
+	$dblink = db_init($_SESSION[_ybot_uid]);
 ?>
 <!DOCTYPE html>
 <html>

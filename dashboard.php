@@ -26,7 +26,7 @@ if($_SESSION['_ybot_type']=='b' || !isset($_SESSION['_ybot_uid'])):
 else:
 
 require('db_port.php');
-$db_port = db_init();
+$db_port = db_init($_SESSION[_ybot_uid]);
 include('command_flags.inc');
 
 ?>
