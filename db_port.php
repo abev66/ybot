@@ -176,9 +176,7 @@
   function remove_sentence($db, $sentence){
     add_db_log($db, TABLE_RESPONSES, 'REMOVE', "$sentence" );
     $result = mysqli_query($db,
-      command_escape(
 	"DELETE FROM ".TABLE_RESPONSES." WHERE response='".command_escape($sentence)."';"
-      )
     );
         
     if(!$result)

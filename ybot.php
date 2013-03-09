@@ -22,8 +22,8 @@
 //---------- DEFINE ------------    
     // Information about this bot.
     define('APPNAME','ybot');
-    define('VERNUM','0.2.7');
-    define('SUBVERNUM','20121001');
+    define('VERNUM','0.2.8b');
+    define('SUBVERNUM','20121010');
     define('OTHERMSG','DB-PHP-yaoming');
     define('SOCKET_ADDR','sockets/ybot-socket');
     
@@ -51,13 +51,11 @@
 	      "qualifier" => $table[$key]['qualifier'],
 	      "content" => $table[$key]['response']
 	      );
-	    break;
 	  } else if($item == '*') {
 	    $sentences_generic[] = array(
 	      "qualifier" => $table[$key]['qualifier'],
 	      "content" => $table[$key]['response']
 	      );
-	    break;
 	  }
 	  
       $sentences_generic_length = count($sentences_generic);
@@ -71,14 +69,14 @@
 	  $ret = $sentences_generic[ rand(0, $sentences_generic_length-1 ) ];
 
       } else if($sentences_matched_length < $sentences_generic_length) {
-	  $ret = (rand(0,2)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
+	  $ret = (rand(0,6)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
 	  
-      } else if($sentences_matched_length >= $sentences_generic_length*2 ) {
+      } else if($sentences_matched_length >= $sentences_generic_length*5 ) {
 	  $temp = array_merge( $sentences_generic, $sentences_matched );
 	  $ret = $temp[ rand( 0, count($temp)-1 ) ];
 	  
       } else {
-	  $ret = (rand(0,3)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
+	  $ret = (rand(0,4)==0) ? $sentences_generic[rand(0,$sentences_generic_length-1)] : $sentences_matched[rand(0,$sentences_matched_length-1)];
 	  
       }
       
