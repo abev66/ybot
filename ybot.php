@@ -420,28 +420,27 @@
 		      'qualifier' => $item->qualifier,
 		      'content' => $item->content_raw,
 		      'id' => $item->owner_id,
-		      'nick_name' => get_nickname($item->owner_id, $pu->plurk_users),
+		      'nick_name' => get_nickname($item->owner_id, $friend_list),
 		      'mention' => false
 		    );
 		} else if ( ($config['CHECK_RESPONSES'] == 'true') ) {
 		    $responses = $plurk->get_responses($item->plurk_id);
-			    
-		    foreach( $responses->responses as $i=>$resItem){
-		      
-		      if(is_mention($resItem->content_raw, $config['PLURK_ACCOUNT']) && ($resItem->user_id != 	$uid) ) {
-			$do_reply = true;
-			
-			$msg = array (
-			  'qualifier' => $resItem->qualifier,
-			  'content' => $resItem->content_raw,
-			  'id' => $resItem->user_id,
-			  'nick_name' => get_nickname($resItem->user_id, $responses->friends),
-			  'mention' => true
-			);
+		    if(!empty($responses))
+		      foreach( $responses->responses as $i=>$resItem){
+			if(is_mention($resItem->content_raw, $config['PLURK_ACCOUNT']) && ($resItem->user_id != $uid) ) {
+			  $do_reply = true;
+			  
+			  $msg = array (
+			    'qualifier' => $resItem->qualifier,
+			    'content' => $resItem->content_raw,
+			    'id' => $resItem->user_id,
+			    'nick_name' => get_nickname($resItem->user_id, $responses->friends),
+			    'mention' => true
+			  );
+			}
+			else if( $resItem->user_id == $uid )
+			  $do_reply = false;
 		      }
-		      else if( $resItem->user_id == $uid )
-			$do_reply = false;
-		    }
 		    
 		} 
 	    
