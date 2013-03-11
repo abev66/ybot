@@ -22,8 +22,8 @@
 //---------- DEFINE ------------    
     // Information about this bot.
     define('APPNAME','ybot');
-    define('VERNUM','0.3.0');
-    define('SUBVERNUM','20130310');
+    define('VERNUM','0.3.1');
+    define('SUBVERNUM','20130311');
     define('OTHERMSG','DB-PHP-yaoming');
     define('SOCKET_ADDR','sockets/ybot-socket');
     $randomd=(string)rand();
