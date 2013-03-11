@@ -470,7 +470,8 @@
 	  // empty after finish
 	  $read_plurks = array();
 	  $mute_plurks = array();
-	}
+	} else
+	  usleep(500000);
       }
     
    $loop_count++;
