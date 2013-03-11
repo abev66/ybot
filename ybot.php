@@ -101,20 +101,36 @@
     function get_friends( $plurk, $uid ){
       $offset = 0;
       static $ret = array();
+      static $last_ret;
       static $last_friendcount = 0;
       $friendcount = $plurk->get_own_profile()->friends_count;
       
-      if($last_friendcount == $friendcount)
+      if($last_friendcount == $friendcount && is_array($ret))
 	return $ret;
-
+	
       $ret = array();
       $last_friendcount = $friendcount;
 
       do {
-	$temp = $plurk->get_friends($uid, $offset);
+	do {
+	  $loop_count = 0;
+	  $temp = $plurk->get_friends($uid, $offset);
+	  if($loop_count > 0) {
+	    sleep(1);
+	    if($loop_count >= 5) {
+	      echo 'Get friend list failed!';
+	      return $last_ret;
+	    }
+	  }
+	  $loop_count++;
+	} while(!is_array($temp));
+	
 	$ret = array_merge($ret, $temp);
 	$offset +=10;
       } while(count($ret) <= $friendcount && !empty($temp) );
+      
+      $last_ret = $ret;
+      
       return $ret;
     }
     
