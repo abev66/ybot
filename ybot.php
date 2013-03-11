@@ -318,28 +318,38 @@
       
       while($control_vars['runbot']) {
 	if($first_run){	  
+	  $offset = -1;
 	  $raw_result = $plurk->get_plurks(date('c'), 30);
 	  $ret_plurks = $raw_result->plurks;
-	  $first_run = false;
+	  $first_run = true;
 	} else {
-	  $offset = -1;
-	  $raw_result = $plurk->realtime_get_commet_channel($channel->comet_server);
-	  $result_str = substr($raw_result,28,-2);
-	  $result = json_decode($result_str);
 	  $plurk_ids = array();
 	  $ret_plurks = array();
+	  $result = json_decode(substr($plurk->realtime_get_commet_channel($channel->comet_server),28,-2));
 	  
-	  if(isset($result->data)){
+	  if(isset($result->data)&& ($result->new_offset != $offset)){
+	    foreach($result->data as $item)
+	      $plurk_ids[] = $item->plurk_id;
+	   }
+	  
+	  
+	  if(isset($result->data) && isset($offset) && $offset != -1){
+	    for( $i=($result->new_offset-1) ; ($i-$offset) > 0 ;  $i--) {
+	      $result = json_decode(substr($plurk->realtime_get_commet_channel($channel->comet_server, $i),28,-2));
+	      echo "$i, ";
 	      foreach($result->data as $item)
-		$plurk_ids[] = $item->plurk_id;
-		
-	      foreach($plurk_ids as $id){
+	      $plurk_ids[] = $item->plurk_id;
+	    }
+	  }
+	  
+	  $offset = $result->new_offset;
+	  
+	  $plurk_ids = array_unique($plurk_ids);
+	  
+	  foreach($plurk_ids as $id){
 		$temp = $plurk->get_plurk($id);
 		$ret_plurks[] = $temp->plurk;
-		}
-		
-	      $offset = $result->new_offset;
-	    }
+	  }
 	}
 	
 	$buffer = '';
@@ -349,8 +359,7 @@
 	
 	  socket_sendto($process_socket, $return_raw, strlen($return_raw), 0, PROCESS_SOCKET_ADDR );
 	  socket_recv($process_socket, $buffer, 1048576, 0);
-	  
-	  unset($ret_plurks);
+	  unset($ret_plurks, $result);
 	} else {
 	  @socket_recv($process_socket, $buffer, 1048576, MSG_DONTWAIT);
 	}
@@ -442,7 +451,7 @@
 			  $do_reply = false;
 		      }
 		    
-		} 
+		}
 	    
 		
 	      if($do_reply) {
