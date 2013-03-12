@@ -321,7 +321,7 @@
 	  $offset = -1;
 	  $raw_result = $plurk->get_plurks(date('c'), 30);
 	  $ret_plurks = $raw_result->plurks;
-	  $first_run = true;
+	  $first_run = false;
 	} else {
 	  $plurk_ids = array();
 	  $ret_plurks = array();
