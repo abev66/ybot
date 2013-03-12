@@ -336,7 +336,6 @@
 	  if(isset($result->data) && isset($offset) && $offset != -1){
 	    for( $i=($result->new_offset-1) ; ($i-$offset) > 0 ;  $i--) {
 	      $result = json_decode(substr($plurk->realtime_get_commet_channel($channel->comet_server, $i),28,-2));
-	      echo "$i, ";
 	      foreach($result->data as $item)
 	      $plurk_ids[] = $item->plurk_id;
 	    }
