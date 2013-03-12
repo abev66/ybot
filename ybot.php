@@ -294,7 +294,7 @@
       'count' => 0
     );
     
-    $loop_count = 0;
+    $loop_count = 1;
     
     // Fork
     $process_id = pcntl_fork();
@@ -377,6 +377,9 @@
     socket_bind($process_socket, PROCESS_SOCKET_ADDR, 0);
     socket_set_block($process_socket);
     chmod(PROCESS_SOCKET_ADDR, 0777);
+
+    // Get friend list
+    $friend_list = get_friends($plurk, $uid);
     
     //  Outter loop
     while ($control_vars['runbot']) {
@@ -406,14 +409,16 @@
 	  $return_code = ($control_vars['runbot'] == true) ? '200' : '999';
 	  socket_sendto($process_socket, $return_code, strlen($return_code), 0, PROCESS_SOCKET_ADDR."-child");
 	  
-	  //  Get Plurks and friends list
-	  $friend_list = get_friends($plurk, $uid);
 	  
 	  //  Apply all friend requests
 	  if( ($config['AUTO_ACCEPT_FRIENDS']=='true'))
 	    $plurk->add_all_as_friends();
 	    
 	  $msg = array();
+	  
+	  //  Update friend list every 10 loops
+	  if($loop_count%10 == 0)
+	    $friend_list = get_friends($plurk, $uid);
 	  
 	  // Check each plurks.
 	  foreach( $pu as $item ) {
